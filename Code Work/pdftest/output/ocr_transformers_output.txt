@@ -1,0 +1,503 @@
+--- Page 1 (OCR) ---
+2304.10557v6 [cs.LG] 20 Jan 2026
+
+arXiv
+
+An Introduction to Transformers
+
+Richard E. Turner
+
+Department of Engineering, University of Cambridge, UK
+Microsoft Research, Cambridge, UK
+
+ret26@cam.ac.uk
+
+Abstract. The transformer is a neural network component that can be used to learn useful represen-
+tations of sequences or sets of data-points [Vaswani et al., 2017]. The transformer has driven recent
+advances in natural language processing [Devlin et al., 2019], computer vision [Dosovitskiy et al., 2021],
+and spatio-temporal modelling [Bi et al., 2022]. There are many introductions to transformers, but most
+do not contain precise mathematical descriptions of the architecture and the intuitions behind the design
+choices are often also missing.? Moreover, as research takes a winding path, the explanations for the
+components of the transformer can be idiosyncratic. In this note we aim for a mathematically precise,
+intuitive, and clean description of the transformer architecture. We will not discuss training as this is
+rather standard. We assume that the reader is familiar with fundamental topics in machine learning
+including multi-layer perceptrons, linear transformations, softmax functions and basic probability.
+
+1See Phuong and Hutter [2022] for an exception to this.
+
+
+--- Page 2 (OCR) ---
+1 Preliminaries
+
+Let's start by talking about the form of the data that is input into a transformer,
+the goal of the transformer, and the form of its output.
+
+1.1 Input data format: sets or sequences of tokens
+
+In order to apply a transformer, data must be converted into a set or sequence!
+of N tokens a”) of dimension D (see figure 1). The tokens can be collected
+into a matrix X() which is D x N.? To give two concrete examples
+
+1. a passage of text can be broken up into a sequence of words or sub-words,
+with each word being represented by a single unique vector,
+
+2. an image can be broken up into a set of patches and each patch can be
+mapped into a vector.
+
+The embeddings can be fixed or they can be learned with the rest of the pa-
+rameters of the model e.g. the vectors representing words can be optimised or
+a learned linear transform can be used to embed image patches (see figure 2).
+
+A sequence of tokens is a generic representation to use as an input — many
+different types of data can be “tokenised” and transformers are then immediately
+applicable rather than requiring a bespoke architectures for each modality as
+was previously the case (CNNs for images, RNNs for sequences, deepsets for
+sets etc.). Moreover, this means that you don’t need bespoke handcrafted
+architectures for mixing data of different modalities — you can just throw them
+all into a big set of tokens.
+
+1.2. Goal: representations of sequences
+
+The transformer will ingest the input data X) and return a representation of
+the sequence in terms of another matrix X(”) which is also of size D x N.
+The slice x, = xi) will be a vector of features representing the sequence at
+the location of token n. These representations can be used for auto-regressive
+prediction of the next (n+1)th token, global classification of the entire sequence
+(by pooling across the whole representation), sequence-to-sequence or image-
+to-image prediction problems, etc. Here MM denotes the number of layers in the
+transformer.
+
+2 The transformer block
+
+The representation of the input sequence will be produced by iteratively applying
+a transformer block
+
+X(™) = transformer-block(X("~)).
+
+The block itself comprises two stages: one operating across the sequence and one
+operating across the features. The first stage refines each feature independently
+according to relationships between tokens across the sequence e.g. how much
+a word in a sequence at position n depends on previous words at position n’,
+or how much two different patches from an image are related to one another.
+This stage acts horizontally across rows of X‘"~1). The second stage refines
+the features representing each token. This stage acts vertically across a column
+of X(™-1)_ By repeatedly applying the transformer block the representation at
+token n and feature d can be shaped by information at token n’ and feature d’.?
+
+vector of features g,(0)
+forni token") n
+
+N columns
+(tokens)
+
+(saunyeay)
+sMol Q
+
+Figure 1: The input to a transformer is N vectors
+Pw which are each D dimensional. These can
+
+be collected together into an array X(°).
+
+t Strictly speaking, the collection of tokens does
+not need to have an order and the transformer
+can handle them as a set (where order does not
+matter), rather than a sequence. See section 3.
+
+2 Note that much of the literature uses the trans-
+posed notation whereby the data matrix is Nx D,
+but | want sequences to run across the page and
+features down it in the schematics (a convention
+I use in other lecture notes).
+
+Sez
+ii —
+
+N patches
+
+x0)
+
+D rows
+
+N columns
+
+2) = W vec
+
+nth patch
+
+Figure 2: Encoding an image: an example [Doso-
+vitskiy et al., 2021]. An image is split into N
+patches. Each patch is reshaped into a vector by
+the vec operator. This vector is acted upon by a
+matrix W which maps the patch to a D dimen-
+sional vector a), These vectors are collected
+together into the input X(°). The matrix W
+can be learned with the rest of the transformer's
+parameters.
+
+3 The idea of interleaving processing across the
+sequence and across features is a common motif
+of many machine learning architectures includ-
+ing graph neural networks (interleaves processing
+across nodes and across features), Fourier neu-
+ral operators (interleaves processing across space
+and across features), and bottleneck blocks in
+ResNets (interleaves processing across pixels and
+across features).
+
+
+--- Page 3 (OCR) ---
+2.1 Stage 1: self-attention across the sequence
+
+The output of the first stage of the transformer block is another D x N array,
+Y(™., The output is produced by aggregating information across the sequence
+independently for each feature using an operation called attention.
+
+Attention. Specifically, the output vector at location n, denoted ys”, is pro-
+
+duced by a simple weighted average of the input features at location n’ =
+1...N, denoted gr) that is*
+
+n!
+
+0 Oe Ae (1)
+
+nf=1
+
+(m)
+
+nn
+
+Here the weighting is given by a so-called attention matrix A which is of
+
+: 2 * N m
+size> N x N and normalises over its columns S7%_, A”) = 1.
+
+n= n!n
+speaking Al”) will take a high value for locations in the sequence n’ which are
+of high relevance for location n. For irrelevant locations, it will take the value
+0. For example, all patches of a visual scene coming from a single object might
+have high corresponding attention values.
+
+Intuitively
+
+We can compactly write the relationship as a matrix multiplication,
+ym) = x(m-1) 4(m) (2)
+
+and we illustrate it below in figure 3.°
+
+ylm) x(m-l) Am
+Yjn)e d x
+n
+DxN DxWN NxWN
+
+Figure 3: The output of an element of the attention mechanism, yi”), is
+
+produced by the dot product of the input horizontally sliced through time xin)
+
+with a vertical slice from the attention matrix Awe) Here the shading in the
+attention matrix represent the elements with a high value in white and those
+with a low value, near to 0, in black.
+
+Self-attention. So far, so simple. But where does the attention matrix come
+from? The neat idea in the first stage of the transformer is that the attention
+matrix is generated from the input sequence itself — so-called self-attention.
+
+A simple way of generating the attention matrix from the input would be to
+measure the similarity between two locations by the dot product between the
+features at those two locations and then use a softmax function to handle the
+
+normalisation i.e.”
+
+A= exp(a,! an’)
+an! = SN
+
+Vat &XP(@ yn)
+
+4 Relationship to Convolutional Neural Net-
+works (CNNs). The attention mechanism can
+recover convolutional filtering as a special case
+e.g. if 2) is a 1D regularly sampled time-series
+and acy) = Aen then the attention mecha-
+nism in eq. 1 becomes a convolution. Unlike nor-
+mal CNNs, these filters have full temporal sup-
+port. Later we will see that the filters themselves
+dynamically depend on the input, another differ-
+ence from standard CNNs. We will also see a
+similarity: transformers will use multiple atten-
+tion maps in each layer in the same way that
+CNNs use multiple filters (though typically trans-
+formers have fewer attention maps than CNNs
+have channels).
+
+5 The need for transformers to store and com-
+pute N x N attention arrays can be a major com-
+putational bottleneck, which makes processing of
+long sequences challenging.
+
+© When training transformers to perform auto-
+regressive prediction, e.g. predicting the next
+word in a sequence based on the previous ones, a
+clever modification to the model can be used to
+accelerate training and inference. This involves
+applying the transformer to the whole sequence,
+and using masking in the attention mechanism
+(AC™ becomes an upper triangular matrix) to
+prevent future tokens affecting the representation
+at earlier tokens. Causal predictions can then be
+made for the entire sequence in one forward pass
+through the transformer. See section 4 for more
+information.
+
+7 We temporarily suppress the superscripts here
+to ease the notation so Ac”)
+
+(
+
+and similarly al” becomes an.
+
+, becomes Aj, 1
+
+
+--- Page 4 (OCR) ---
+However, this naive approach entangles information about the similarity between
+locations in the sequence with the content of the sequence itself.
+
+An alternative is to perform the same operation on a linear transformation of
+the sequence, Ua, so that®
+
+exp(x| U'U an’)
+het exp(@ LU TU an’)
+
+Typically, U will project to a lower dimensional space i.e. U is k x D dimensional
+with A < D. In this way only some of the features in the input sequence need
+be used to compute the similarity, the others being projected out, thereby de-
+coupling the attention computation from the content. However, the numerator
+in this construction is symmetric. This could be a disadvantage. For example,
+we might want the word ‘caulking iron’ to be strongly associated with the word
+‘tool’ (as it is a type of tool), but have the word ‘tool’ more weakly associated
+with the word ‘caulking iron’ (because most of us rarely encounter it).?
+
+Ann!
+
+Fortunately, it is simple to generalise the attention mechanism above to be asym-
+metric by applying two different linear transformations to the original sequence,
+
+exp (aw, Uy Ugtn’)
+
+The two quantities that are dot-producted together here qn = Ug@n and ky =
+Up%n are typically known as the queries and the keys, respectively.
+
+Ann! (3)
+
+Together equations 2 and 3 define the self-attention mechanism. Notice that
+the K x D matrices Ug and Ux are the only parameters of this mechanism.?°
+Multi-head self-attention (MHSA). In the self-attention mechanisms de-
+scribed above, there is one attention matrix which describes the similarity of
+two locations within the sequence. This can act as a bottleneck in the architec-
+ture — it would be useful for pairs of points to be similar in some ‘dimensions’
+and different in others.1!
+
+In order to increase capacity of the first self-attention stage, the transformer
+block applies H sets of self-attention in parallel’? (termed H heads) and then
+linearly projects the results down to the D x N array required for further pro-
+cessing. This slight generalisation is called multi-head self-attention.
+
+H
+= ve) XD Ar). where (4)
+h=1
+ex ((m{) | a)
+N (m) ) ©)
+vi m. (m
+ena EXP (a n! ) Gh n! ')
+
+ak) = Ufa) and KIO) <TH.
+
+YO") = MHSAg(X0"-D)
+
+[Ae yan’
+
+h
+
+Here the H matrices V;"" which are D x D project the H self-attention stages
+down to the required output dimensionality D.°
+
+The addition of the matrices vi, and the fact that retaining just the diagonal
+elements of the attention matrix A(™) will interact the signal instantaneously
+with itself, does mean there is some cross-feature processing in multi-head self-
+attention, as opposed to it containing purely cross-sequence processing. How-
+ever, the stage has limited capacity for this type of processing and it is the job
+of the second stage to address this.
+
+5 Often you will see attention parameterised as
+exp(x U' Ua, /VD)
+N
+res exP(@ UT Vays /VD
+
+Dividing the exponents by the square-root of the
+dimensionality of the projected vector helps nu-
+merical stability, but in this presentation we ab-
+sorb this term into U to improve clarity.
+
+A
+
+nn =
+
+2 Some of this effect could be handled by the
+normalisation in the denominator, but asymmet-
+ric similarity allows more flexibility. However, |
+do not know of experimental evidence to support
+using Ug # Up.
+
+10 Relationship to Recurrent Neural Net-
+works (RNNs). It is illuminating to compare
+the temporal processing in the transformer to
+that of RNNs which recursively update a hid-
+den state feature representation (a) based
+on the current observation (al! °) and the pre-
+vious hidden state xD = f(x a); x)
+
+Sf (x a(),; 2) sa 2), Here we've unrolled
+the RNN one step to show that observations
+which are nearby to the hidden state (e.g. af °)
+are treated differently from observations that
+are further away (e.g. a ) ;), as information is
+propagated by recurrent ‘pplication of the func-
+tion f(-). In contrast, in the transformer, self-
+attention treats all observations at all time-points
+in an identical manner, no matter how far away
+they are. This is one reason why they find it
+simpler to learn long-range relationships.
+
+11 If attention matrices are viewed as a data-
+
+driven version of filters in a CNN, then the need
+for more filters / channels is clear. Typical
+choices for the number of heads H is 8 or 16,
+lower than typical numbers of channels in a CNN.
+
+12 The computational cost of multi-head self-
+attention is usually dominated by the matrix mul-
+tiplication involving the attention matrix and is
+therefore O(HDN?).
+
+13 The product of the matrices yim) x (m1)
+is related to the so-called values which are nor-
+mally introduced in descriptions of self-attention
+along side queries and keys. In the usual presen-
+tation, there is a redundancy between the linear
+transform used to compute the values and the lin-
+ear projection at the end of the multi-head self-
+attention, so we have not explicitly introduced
+them here. The standard presentation can be re-
+covered by setting V;, to be a low-rank matrix
+Vn = Up;Uy,n where Uj; is DxK and Uy,» is
+KxD. Typically K is set to K = D/H so that
+changing the number of heads leads to models
+with similar numbers of parameters and compu-
+tational demands.
+
+
+--- Page 5 (OCR) ---
+Figure 4 shows multi-head self-attention schematically. Multi-head attention
+comprises the following parameters 0 = {Ugn- Ukr: Va Ey i.e. 3H matrices
+of size K x D, K x D, and D x D respectively.
+
+H
+ym |= Ss Vil | xO"—D] x | alm
+h=1
+DxN DxD DxN NxN
+xH xH
+
+2.2 Stage 2: multi-layer perceptron across features
+
+The second stage of processing in the transformer block operates across features,
+refining the representation using a non-linear transform. To do this, we simply
+apply a multi-layer perceptron (MLP) to the vector of features at each location
+n in the sequence,
+
+a”) = MLPo(yi"”’).
+
+Notice that the parameters of the MLP, 6, are the same for each location n.!4
+15
+
+2.3. The transformer block: Putting it all together with residual con-
+nections and layer normalisation
+
+We can now stack MHSA and MLP layers to produce the transformer block.
+Rather than doing this directly, we make use of two ubiquitous transformations
+to produce a more stable model that trains more easily: residual connections
+and normalisation.
+
+Residual connections. The use of residual connections is widespread across
+machine learning as they make initialisation simple, have a sensible inductive bias
+towards simple functions, and stabilise learning [Szegedy et al., 2017]. Instead
+of directly specifying a function x) = fg(a("—)), the idea is to parameterise
+it in terms of an identity mapping and a residual term
+
+ol) = D4 resy(e-D),
+
+Equivalently, this can be viewed as modelling the differences between the repre-
+sentation 20 — 2") = resg(a(—))) and will work well when the function
+that is being modelled is close to identity. This type of parameterisation is used
+for both the MHSA and MLP stages in the transformer, with the idea that each
+applies a mild non-linear transformation to the representation. Over many layers,
+these mild non-linear transformations compose to form large transformations.
+
+Token normalisation. The use of normalisation, such as LayerNorm and Batch-
+Norm, is also widespread across the deep learning community as a means to
+stabilise learning. There are many potential choices for how to compute nor-
+malisation statistics (see figure 5 for a discussion), but the standard approach
+is to use LayerNorm [Ba et al., 2016] which normalises each token separately,
+removing the mean and dividing by the standard deviation,1©
+
+1 c
+(fam — mean(ap)) Ya + Ba = LayerNorm(X )ajn
+
+Tan =
+" fvar(@n)
+
+D D
+where mean(@,) = 2; ean and var(@n) = 4 S2? 4 (wan — mean(@,))?.
+The two parameters yg and {q are a learned scale and shift.
+
+Figure 4: Multi-head self-attention applies H self-
+attention operations in parallel and then linearly
+projects the HD x N dimensional output down to
+D x N by applying a linear transform, implemented
+here by the H matrices V),.
+
+14 The MLPs used typically have one or two
+hidden-layers with dimension equal to the num-
+ber of features D (or larger). The computational
+cost of this step is therefore roughly Nx Dx D. If
+the feature embedding size approaches the length
+of the sequence D = N, the MLPs can start to
+dominate the computational complexity (e.g. this
+can be the case for vision transformers which em-
+bed large patches).
+
+15 Relationship to Graph Neural Networks
+(GNNs). At a high level, graph neural networks
+interleave two steps. First, a message passing
+step where each node receives messages from its
+neighbours which are then aggregated together.
+Second, a feature processing step where the in-
+coming aggregated messages are used to update
+each node's features. Through this lens, the
+transformer can be viewed as an unrolled GNN
+with each token corresponding to an edge of a
+fully connected graph. MHSA forms the mes-
+sage passing step, and the MLPs forming the
+feature update step. Each transformer block cor-
+responds to one update of the GNN. Moreover,
+many methods for scaling transformers introduce
+sparse forms of attention where each token at-
+tends to only a restricted set of other tokens,
+that is they specify a sparse graph connectivity
+structure. Arguably, in this way transformers are
+more general as they can use different graphs at
+different layers in the transformer.
+
+16 This is also known as z-scoring in some fields
+and is related to whitening.
+

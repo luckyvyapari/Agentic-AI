@@ -1,0 +1,1800 @@
+
+    <html>
+    <head>
+        <title>PDF Extraction Comparison Report</title>
+        <style>
+            body { font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; color: #333; max-width: 1200px; margin: 0 auto; padding: 40px; background: #f8f9fa; }
+            h1 { color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 10px; }
+            h2 { color: #1e8e3e; margin-top: 50px; border-left: 5px solid #1e8e3e; padding-left: 15px; }
+            table { width: 100%; border-collapse: collapse; margin-bottom: 30px; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; }
+            th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+            th { background-color: #f1f3f4; font-weight: 600; color: #555; }
+            .content-box { background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; max-height: 400px; overflow-y: scroll; white-space: pre-wrap; font-family: 'Fira Code', monospace; font-size: 14px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+            .tag { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+            .tag-fast { background: #e6f4ea; color: #1e8e3e; }
+            .tag-structural { background: #e8f0fe; color: #1a73e8; }
+            .tag-fallback { background: #fef7e0; color: #f9ab00; }
+            .btn { background: #1a73e8; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-bottom: 30px; display: inline-block; }
+            .btn:hover { background: #1557b0; }
+        </style>
+    </head>
+    <body>
+        <h1>PDF Extraction Analysis & Comparison</h1>
+        
+        <p>This report compares the output quality and performance of different extraction libraries.</p>
+        
+        <a href="visual_layout.html" class="btn" target="_blank">👁️ View PDF Visual Layout (HTML)</a>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Library</th>
+                    <th>Quality</th>
+                    <th>Rating</th>
+                    <th>Char Count</th>
+                    <th>Key Features</th>
+                </tr>
+            </thead>
+            <tbody>
+    
+                <tr>
+                    <td>IBM Docling</td>
+                    <td>High</td>
+                    <td>⭐⭐⭐⭐⭐</td>
+                    <td>33,568</td>
+                    <td><span class="tag tag-structural">Structural</span></td>
+                </tr>
+            
+                <tr>
+                    <td>PyMuPDF</td>
+                    <td>Good</td>
+                    <td>⭐⭐⭐⭐</td>
+                    <td>33,121</td>
+                    <td><span class="tag tag-structural">Robust</span></td>
+                </tr>
+            
+                <tr>
+                    <td>LangChain</td>
+                    <td>Average</td>
+                    <td>⭐⭐⭐</td>
+                    <td>33,379</td>
+                    <td><span class="tag tag-structural">Robust</span></td>
+                </tr>
+            
+                <tr>
+                    <td>pdfplumber</td>
+                    <td>Good</td>
+                    <td>⭐⭐⭐⭐</td>
+                    <td>32,196</td>
+                    <td><span class="tag tag-structural">Robust</span></td>
+                </tr>
+            
+                <tr>
+                    <td>PyPDF</td>
+                    <td>Low</td>
+                    <td>⭐⭐</td>
+                    <td>32,710</td>
+                    <td><span class="tag tag-fast">Fastest</span></td>
+                </tr>
+            
+                <tr>
+                    <td>OCR (Tesseract)</td>
+                    <td>Variable</td>
+                    <td>⭐⭐</td>
+                    <td>18,726</td>
+                    <td><span class="tag tag-fallback">Image-to-Text</span></td>
+                </tr>
+            
+                <tr>
+                    <td>PyMuPDF Detailed (JSON)</td>
+                    <td>Maximum</td>
+                    <td>⭐⭐⭐⭐⭐</td>
+                    <td>182,714</td>
+                    <td><span class="tag tag-structural">Robust</span></td>
+                </tr>
+            
+            </tbody>
+        </table>
+
+        <h1>Detailed Output View</h1>
+    
+                <h2>IBM Docling (docling_transformers_output.md)</h2>
+                <div class="content-box">## An Introduction to Transformers
+
+Department of Engineering, University of Cambridge, UK
+
+Richard E. Turner Microsoft Research, Cambridge, UK
+
+ret26@cam.ac.uk
+
+Abstract. The transformer is a neural network component that can be used to learn useful representations of sequences or sets of data-points [Vaswani et al., 2017]. The transformer has driven recent advances in natural language processing [Devlin et al., 2019], computer vision [Dosovitskiy et al., 2021], and spatio-temporal modelling [Bi et al., 2022]. There are many introductions to transformers, but most do not contain precise mathematical descriptions of the architecture and the intuitions behind the design choices are often also missing. 1 Moreover, as research takes a winding path, the explanations for the components of the transformer can be idiosyncratic. In this note we aim for a mathematically precise, intuitive, and clean description of the transformer architecture. We will not discuss training as this is rather standard. We assume that the reader is familiar with fundamental topics in machine learning including multi-layer perceptrons, linear transformations, softmax functions and basic probability.
+
+1 See Phuong and Hutter [2022] for an exception to this.
+
+vector of features x(0)
+
+for nth token
+
+→
+
+x (0)
+
+input
+
+N patches
+
+## 1 Preliminaries
+
+(tokens)
+
+Let's start by talking about the form of the data that is input into a transformer, the goal of the transformer, and the form of its output.
+
+nth patch
+
+## 1.1 Input data format: sets or sequences of tokens
+
+In order to apply a transformer, data must be converted into a set or sequence 1 of N tokens x (0) n of dimension D (see figure 1). The tokens can be collected into a matrix X (0) which is D × N . 2 To give two concrete examples
+
+1. a passage of text can be broken up into a sequence of words or sub-words, with each word being represented by a single unique vector,
+2. an image can be broken up into a set of patches and each patch can be mapped into a vector.
+
+The embeddings can be fixed or they can be learned with the rest of the parameters of the model e.g. the vectors representing words can be optimised or a learned linear transform can be used to embed image patches (see figure 2). A sequence of tokens is a generic representation to use as an input - many different types of data can be 'tokenised' and transformers are then immediately applicable rather than requiring a bespoke architectures for each modality as was previously the case (CNNs for images, RNNs for sequences, deepsets for sets etc.). Moreover, this means that you don't need bespoke handcrafted architectures for mixing data of different modalities - you can just throw them all into a big set of tokens.
+
+## 1.2 Goal: representations of sequences
+
+The transformer will ingest the input data X (0) and return a representation of the sequence in terms of another matrix X ( M ) which is also of size D × N . The slice x n = X ( M ) : ,n will be a vector of features representing the sequence at the location of token n . These representations can be used for auto-regressive prediction of the next (n+1)th token, global classification of the entire sequence (by pooling across the whole representation), sequence-to-sequence or imageto-image prediction problems, etc. Here M denotes the number of layers in the transformer.
+
+## 2 The transformer block
+
+The representation of the input sequence will be produced by iteratively applying a transformer block
+
+<!-- formula-not-decoded -->
+
+The block itself comprises two stages: one operating across the sequence and one operating across the features. The first stage refines each feature independently according to relationships between tokens across the sequence e.g. how much a word in a sequence at position n depends on previous words at position n ′ , or how much two different patches from an image are related to one another. This stage acts horizontally across rows of X ( m -1) . The second stage refines the features representing each token. This stage acts vertically across a column of X ( m -1) . By repeatedly applying the transformer block the representation at token n and feature d can be shaped by information at token n ′ and feature d ′ . 3
+
+Figure 1: The input to a transformer is N vectors x (0) n which are each D dimensional. These can be collected together into an array X (0) .
+
+<!-- image -->
+
+- 1 Strictly speaking, the collection of tokens does not need to have an order and the transformer can handle them as a set (where order does not matter), rather than a sequence. See section 3.
+- 2 Note that much of the literature uses the transposed notation whereby the data matrix is N × D , but I want sequences to run across the page and features down it in the schematics (a convention I use in other lecture notes).
+- 3 The idea of interleaving processing across the sequence and across features is a common motif of many machine learning architectures including graph neural networks (interleaves processing across nodes and across features), Fourier neural operators (interleaves processing across space and across features), and bottleneck blocks in ResNets (interleaves processing across pixels and across features).
+
+Figure 2: Encoding an image: an example [Dosovitskiy et al., 2021]. An image is split into N patches. Each patch is reshaped into a vector by the vec operator. This vector is acted upon by a matrix W which maps the patch to a D dimensional vector x (0) n . These vectors are collected together into the input X (0) . The matrix W can be learned with the rest of the transformer's parameters.
+
+<!-- image -->
+
+y (m)
+
+= d
+
+## 2.1 Stage 1: self-attention across the sequence
+
+The output of the first stage of the transformer block is another D × N array, Y ( m ) . The output is produced by aggregating information across the sequence independently for each feature using an operation called attention .
+
+Attention. Specifically, the output vector at location n , denoted y ( m ) n , is produced by a simple weighted average of the input features at location n ′ = 1 . . . N , denoted x ( m -1) n ′ , that is 4
+
+<!-- formula-not-decoded -->
+
+Here the weighting is given by a so-called attention matrix A ( m ) n ′ ,n which is of size 5 N × N and normalises over its columns ∑ N n ′ =1 A ( m ) n ′ ,n = 1 . Intuitively speaking A ( m ) n ′ ,n will take a high value for locations in the sequence n ′ which are of high relevance for location n . For irrelevant locations, it will take the value 0 . For example, all patches of a visual scene coming from a single object might have high corresponding attention values.
+
+We can compactly write the relationship as a matrix multiplication,
+
+<!-- formula-not-decoded -->
+
+and we illustrate it below in figure 3. 6
+
+Figure 3: The output of an element of the attention mechanism, Y ( m ) d,n , is produced by the dot product of the input horizontally sliced through time X ( m ) d, : with a vertical slice from the attention matrix A ( m ) : ,n . Here the shading in the attention matrix represent the elements with a high value in white and those with a low value, near to 0, in black.
+
+<!-- image -->
+
+Self-attention. So far, so simple. But where does the attention matrix come from? The neat idea in the first stage of the transformer is that the attention matrix is generated from the input sequence itself - so-called self-attention .
+
+A simple way of generating the attention matrix from the input would be to measure the similarity between two locations by the dot product between the features at those two locations and then use a softmax function to handle the normalisation i.e. 7
+
+<!-- formula-not-decoded -->
+
+X(m-1)
+
+A(m)
+
+4 Relationship to Convolutional Neural Networks (CNNs). The attention mechanism can recover convolutional filtering as a special case e.g. if x (0) n is a 1D regularly sampled time-series and A ( m ) n ′ ,n = A ( m ) n ′ -n then the attention mechanism in eq. 1 becomes a convolution. Unlike normal CNNs, these filters have full temporal support. Later we will see that the filters themselves dynamically depend on the input, another difference from standard CNNs. We will also see a similarity: transformers will use multiple attention maps in each layer in the same way that CNNs use multiple filters (though typically transformers have fewer attention maps than CNNs have channels).
+
+5 The need for transformers to store and compute N × N attention arrays can be a major computational bottleneck, which makes processing of long sequences challenging.
+
+6 When training transformers to perform autoregressive prediction, e.g. predicting the next word in a sequence based on the previous ones, a clever modification to the model can be used to accelerate training and inference. This involves applying the transformer to the whole sequence, and using masking in the attention mechanism ( A ( m ) becomes an upper triangular matrix) to prevent future tokens affecting the representation at earlier tokens. Causal predictions can then be made for the entire sequence in one forward pass through the transformer. See section 4 for more information.
+
+7 We temporarily suppress the superscripts here to ease the notation so A ( m ) n,n ′ becomes A n,n ′ and similarly x ( m ) n becomes x n .
+
+However, this naïve approach entangles information about the similarity between locations in the sequence with the content of the sequence itself.
+
+An alternative is to perform the same operation on a linear transformation of the sequence, U x n , so that 8
+
+<!-- formula-not-decoded -->
+
+Typically, U will project to a lower dimensional space i.e. U is K × D dimensional with K &lt; D . In this way only some of the features in the input sequence need be used to compute the similarity, the others being projected out, thereby decoupling the attention computation from the content. However, the numerator in this construction is symmetric. This could be a disadvantage. For example, we might want the word '...</div>
+            
+                <h2>PyMuPDF (pymupdf_transformers_output.txt)</h2>
+                <div class="content-box">--- Page 1 ---
+An Introduction to Transformers
+Richard E. Turner
+Department of Engineering, University of Cambridge, UK
+Microsoft Research, Cambridge, UK
+ret26@cam.ac.uk
+Abstract. The transformer is a neural network component that can be used to learn useful represen-
+tations of sequences or sets of data-points [Vaswani et al., 2017]. The transformer has driven recent
+advances in natural language processing [Devlin et al., 2019], computer vision [Dosovitskiy et al., 2021],
+and spatio-temporal modelling [Bi et al., 2022]. There are many introductions to transformers, but most
+do not contain precise mathematical descriptions of the architecture and the intuitions behind the design
+choices are often also missing.1 Moreover, as research takes a winding path, the explanations for the
+components of the transformer can be idiosyncratic. In this note we aim for a mathematically precise,
+intuitive, and clean description of the transformer architecture. We will not discuss training as this is
+rather standard. We assume that the reader is familiar with fundamental topics in machine learning
+including multi-layer perceptrons, linear transformations, softmax functions and basic probability.
+1See Phuong and Hutter [2022] for an exception to this.
+arXiv:2304.10557v6  [cs.LG]  20 Jan 2026
+
+
+--- Page 2 ---
+Figure 1: The input to a transformer is N vectors
+x(0)
+n
+which are each D dimensional. These can
+be collected together into an array X(0).
+1 Strictly speaking, the collection of tokens does
+not need to have an order and the transformer
+can handle them as a set (where order does not
+matter), rather than a sequence. See section 3.
+2 Note that much of the literature uses the trans-
+posed notation whereby the data matrix is N×D,
+but I want sequences to run across the page and
+features down it in the schematics (a convention
+I use in other lecture notes).
+Figure 2: Encoding an image: an example [Doso-
+vitskiy et al., 2021].
+An image is split into N
+patches. Each patch is reshaped into a vector by
+the vec operator. This vector is acted upon by a
+matrix W which maps the patch to a D dimen-
+sional vector x(0)
+n . These vectors are collected
+together into the input X(0).
+The matrix W
+can be learned with the rest of the transformer’s
+parameters.
+3 The idea of interleaving processing across the
+sequence and across features is a common motif
+of many machine learning architectures includ-
+ing graph neural networks (interleaves processing
+across nodes and across features), Fourier neu-
+ral operators (interleaves processing across space
+and across features), and bottleneck blocks in
+ResNets (interleaves processing across pixels and
+across features).
+1
+Preliminaries
+Let’s start by talking about the form of the data that is input into a transformer,
+the goal of the transformer, and the form of its output.
+1.1
+Input data format: sets or sequences of tokens
+In order to apply a transformer, data must be converted into a set or sequence1
+of N tokens x(0)
+n
+of dimension D (see figure 1). The tokens can be collected
+into a matrix X(0) which is D × N.2 To give two concrete examples
+1. a passage of text can be broken up into a sequence of words or sub-words,
+with each word being represented by a single unique vector,
+2. an image can be broken up into a set of patches and each patch can be
+mapped into a vector.
+The embeddings can be fixed or they can be learned with the rest of the pa-
+rameters of the model e.g. the vectors representing words can be optimised or
+a learned linear transform can be used to embed image patches (see figure 2).
+A sequence of tokens is a generic representation to use as an input – many
+different types of data can be “tokenised” and transformers are then immediately
+applicable rather than requiring a bespoke architectures for each modality as
+was previously the case (CNNs for images, RNNs for sequences, deepsets for
+sets etc.).
+Moreover, this means that you don’t need bespoke handcrafted
+architectures for mixing data of different modalities — you can just throw them
+all into a big set of tokens.
+1.2
+Goal: representations of sequences
+The transformer will ingest the input data X(0) and return a representation of
+the sequence in terms of another matrix X(M) which is also of size D × N.
+The slice xn = X(M)
+:,n
+will be a vector of features representing the sequence at
+the location of token n. These representations can be used for auto-regressive
+prediction of the next (n+1)th token, global classification of the entire sequence
+(by pooling across the whole representation), sequence-to-sequence or image-
+to-image prediction problems, etc. Here M denotes the number of layers in the
+transformer.
+2
+The transformer block
+The representation of the input sequence will be produced by iteratively applying
+a transformer block
+X(m) = transformer-block(X(m−1)).
+The block itself comprises two stages: one operating across the sequence and one
+operating across the features. The first stage refines each feature independently
+according to relationships between tokens across the sequence e.g. how much
+a word in a sequence at position n depends on previous words at position n′,
+or how much two different patches from an image are related to one another.
+This stage acts horizontally across rows of X(m−1). The second stage refines
+the features representing each token. This stage acts vertically across a column
+of X(m−1). By repeatedly applying the transformer block the representation at
+token n and feature d can be shaped by information at token n′ and feature d′.3
+1
+
+
+--- Page 3 ---
+4 Relationship to Convolutional Neural Net-
+works (CNNs).
+The attention mechanism can
+recover convolutional filtering as a special case
+e.g. if x(0)
+n
+is a 1D regularly sampled time-series
+and A(m)
+n′,n = A(m)
+n′−n then the attention mecha-
+nism in eq. 1 becomes a convolution. Unlike nor-
+mal CNNs, these filters have full temporal sup-
+port. Later we will see that the filters themselves
+dynamically depend on the input, another differ-
+ence from standard CNNs.
+We will also see a
+similarity: transformers will use multiple atten-
+tion maps in each layer in the same way that
+CNNs use multiple filters (though typically trans-
+formers have fewer attention maps than CNNs
+have channels).
+5 The need for transformers to store and com-
+pute N ×N attention arrays can be a major com-
+putational bottleneck, which makes processing of
+long sequences challenging.
+6 When training transformers to perform auto-
+regressive prediction, e.g. predicting the next
+word in a sequence based on the previous ones, a
+clever modification to the model can be used to
+accelerate training and inference. This involves
+applying the transformer to the whole sequence,
+and using masking in the attention mechanism
+(A(m) becomes an upper triangular matrix) to
+prevent future tokens affecting the representation
+at earlier tokens. Causal predictions can then be
+made for the entire sequence in one forward pass
+through the transformer. See section 4 for more
+information.
+7 We temporarily suppress the superscripts here
+to ease the notation so A(m)
+n,n′ becomes An,n′
+and similarly x(m)
+n
+becomes xn.
+2.1
+Stage 1: self-attention across the sequence
+The output of the first stage of the transformer block is another D × N array,
+Y (m). The output is produced by aggregating information across the sequence
+independently for each feature using an operation called attention.
+Attention. Specifically, the output vector at location n, denoted y(m)
+n
+, is pro-
+duced by a simple weighted average of the input features at location n′ =
+1 . . . N, denoted x(m−1)
+n′
+, that is4
+y(m)
+n
+=
+N
+X
+n′=1
+x(m−1)
+n′
+A(m)
+n′,n.
+(1)
+Here the weighting is given by a so-called attention matrix A(m)
+n′,n which is of
+size5 N × N and normalises over its columns PN
+n′=1 A(m)
+n′,n = 1. Intuitively
+speaking A(m)
+n′,n will take a high value for locations in the sequence n′ which are
+of high relevance for location n. For irrelevant locations, it will take the value
+0. For example, all patches of a visual scene coming from a single object might
+have high corresponding attention values.
+We can compactly write the relationship as a matrix multiplication,
+Y (m) = X(m−1)A(m),
+(2)
+and we illustrate it below in figure 3.6
+Figure 3: The output of an element of the attention mechanism, Y (m)
+d,n , is
+produced by the dot product of the input horizontally sliced through time X(m)
+d,:
+with a vertical slice from the attention matrix A(m)
+:,n . Here the shading in the
+attention matrix represent the elements with a high value in white and those
+with a low value, near to 0, in black.
+Self-attention. So far, so simple. But where does the attention matrix come
+from? The neat idea in the first stage of the transformer is that the attention
+matrix is generated from the input sequence itself – so-called self-attention.
+A simple way of generating the attention matrix from the input would be to
+measure the similarity between two locations by the dot product between the
+features at those two locations and then use a softmax function to handle the
+normalisation i.e.7
+An,n′ =
+exp(x⊤
+n xn′)
+PN
+n′′=1 exp(x⊤
+n′′xn′)
+.
+2
+
+
+--- Page 4 ---
+8 Often you will see attention parameterised as
+An,n′ =
+exp(x⊤
+n U⊤Uxn′/
+√
+D)
+PN
+n′′=1 exp(x⊤
+n′′U⊤Uxn′/
+√
+D)
+.
+Dividing the exponents by the square-root of the
+dimensionality of the projected vector helps nu-
+merical stability, but in this presentation we ab-
+sorb this term into U to improve clarity.
+9 Some of this effect could be handled by the
+normalisation in the denominator, but asymmet-
+ric similarity allows more flexibility. However, I
+do not know of experimental evidence to support
+using Uq ̸= Uk.
+10
+Relationship
+to
+Recurrent
+Neural
+Net-
+works (RNNs).
+It is illuminating to compare
+the temporal processing in the transformer to
+that of RNNs which recursively update a hid-
+den state feature representation (x(1)
+n ) based
+on the current observation (x(0)
+n ) and the pre-
+vious hidden state x(1)
+n
+= f(x(1)
+n−1; x(0)
+n ) =
+f(f(x(1)
+n−2; x(0)
+n−1); x(0)
+n ...</div>
+            
+                <h2>LangChain (langchain_transformers_output.txt)</h2>
+                <div class="content-box">--- Page 1 ---
+An Introduction to Transformers
+Richard E. Turner
+Department of Engineering, University of Cambridge, UK
+Microsoft Research, Cambridge, UK
+ret26@cam.ac.uk
+Abstract.The transformer is a neural network component that can be used to learn useful represen-
+tations of sequences or sets of data-points [Vaswani et al., 2017]. The transformer has driven recent
+advances in natural language processing [Devlin et al., 2019], computer vision [Dosovitskiy et al., 2021],
+and spatio-temporal modelling [Bi et al., 2022]. There are many introductions to transformers, but most
+do not contain precise mathematical descriptions of the architecture and the intuitions behind the design
+choices are often also missing.1 Moreover, as research takes a winding path, the explanations for the
+components of the transformer can be idiosyncratic. In this note we aim for a mathematically precise,
+intuitive, and clean description of the transformer architecture. We will not discuss training as this is
+rather standard. We assume that the reader is familiar with fundamental topics in machine learning
+including multi-layer perceptrons, linear transformations, softmax functions and basic probability.
+1See Phuong and Hutter [2022] for an exception to this.
+arXiv:2304.10557v6  [cs.LG]  20 Jan 2026
+
+--- Page 2 ---
+Figure 1: The input to a transformer isNvectors
+x(0)
+n which are eachDdimensional. These can
+be collected together into an arrayX(0).
+1 Strictly speaking, the collection of tokens does
+not need to have an order and the transformer
+can handle them as a set (where order does not
+matter), rather than a sequence. See section 3.
+2 Note that much of the literature uses the trans-
+posednotationwherebythedatamatrixisN×D,
+but I want sequences to run across the page and
+features down it in the schematics (a convention
+I use in other lecture notes).
+Figure 2: Encoding an image: an example [Doso-
+vitskiy et al., 2021]. An image is split intoN
+patches. Each patch is reshaped into a vector by
+the vec operator. This vector is acted upon by a
+matrixWwhich maps the patch to aDdimen-
+sional vectorx (0)
+n . These vectors are collected
+together into the inputX (0). The matrixW
+can be learned with the rest of the transformer’s
+parameters.
+3 The idea of interleaving processing across the
+sequence and across features is a common motif
+of many machine learning architectures includ-
+ing graph neural networks (interleaves processing
+across nodes and across features), Fourier neu-
+ral operators (interleaves processing across space
+and across features), and bottleneck blocks in
+ResNets (interleaves processing across pixels and
+across features).
+1 Preliminaries
+Let’s start by talking about the form of the data that is input into a transformer,
+the goal of the transformer, and the form of its output.
+1.1 Input data format: sets or sequences of tokens
+In order to apply a transformer, data must be converted into a set or sequence1
+ofNtokensx (0)
+n of dimensionD(see figure 1). The tokens can be collected
+into a matrixX (0) which isD×N.2 To give two concrete examples
+1. a passage of text can be broken up into a sequence of words or sub-words,
+with each word being represented by a single unique vector,
+2. an image can be broken up into a set of patches and each patch can be
+mapped into a vector.
+The embeddings can be fixed or they can be learned with the rest of the pa-
+rameters of the model e.g. the vectors representing words can be optimised or
+a learned linear transform can be used to embed image patches (see figure 2).
+A sequence of tokens is a generic representation to use as an input – many
+different types of data can be “tokenised” and transformers are then immediately
+applicable rather than requiring a bespoke architectures for each modality as
+was previously the case (CNNs for images, RNNs for sequences, deepsets for
+sets etc.). Moreover, this means that you don’t need bespoke handcrafted
+architectures for mixing data of different modalities — you can just throw them
+all into a big set of tokens.
+1.2 Goal: representations of sequences
+The transformer will ingest the input dataX(0) and return a representation of
+the sequence in terms of another matrixX(M) which is also of sizeD×N.
+The slicexn =X (M)
+:,n will be a vector of features representing the sequence at
+the location of tokenn. These representations can be used for auto-regressive
+prediction of the next (n+1)th token, global classification of the entire sequence
+(by pooling across the whole representation), sequence-to-sequence or image-
+to-image prediction problems, etc. HereMdenotes the number of layers in the
+transformer.
+2 The transformer block
+The representation of the input sequence will be produced by iteratively applying
+a transformer block
+X (m) =transformer-block(X (m−1)).
+Theblockitselfcomprisestwostages: oneoperatingacrossthesequenceandone
+operating across the features. The first stage refines each feature independently
+according to relationships between tokens across the sequence e.g. how much
+a word in a sequence at positionndepends on previous words at positionn′,
+or how much two different patches from an image are related to one another.
+This stage acts horizontally across rows ofX(m−1). The second stage refines
+
+--- Page 3 ---
+or how much two different patches from an image are related to one another.
+This stage acts horizontally across rows ofX(m−1). The second stage refines
+the features representing each token. This stage acts vertically across a column
+ofX (m−1). By repeatedly applying the transformer block the representation at
+tokennand featuredcan be shaped by information at tokenn′and featured′.3
+1
+
+--- Page 4 ---
+4 Relationship to Convolutional Neural Net-
+works(CNNs). The attention mechanism can
+recover convolutional filtering as a special case
+e.g. ifx (0)
+n is a 1D regularly sampled time-series
+andA (m)
+n′,n =A (m)
+n′−nthen the attention mecha-
+nism in eq. 1 becomes a convolution. Unlike nor-
+mal CNNs, these filters have full temporal sup-
+port. Later we will see that the filters themselves
+dynamically depend on the input, another differ-
+ence from standard CNNs. We will also see a
+similarity: transformers will use multiple atten-
+tion maps in each layer in the same way that
+CNNs use multiple filters (though typically trans-
+formers have fewer attention maps than CNNs
+have channels).
+5 The need for transformers to store and com-
+puteN×Nattention arrays can be a major com-
+putational bottleneck, which makes processing of
+long sequences challenging.
+6 When training transformers to perform auto-
+regressive prediction, e.g. predicting the next
+word in a sequence based on the previous ones, a
+clever modification to the model can be used to
+accelerate training and inference. This involves
+applying the transformer to the whole sequence,
+and using masking in the attention mechanism
+(A(m) becomes an upper triangular matrix) to
+preventfuturetokensaffectingtherepresentation
+at earlier tokens. Causal predictions can then be
+made for the entire sequence in one forward pass
+through the transformer. See section 4 for more
+information.
+7 We temporarily suppress the superscripts here
+to ease the notation soA (m)
+n,n′ becomesA n,n′
+and similarlyx (m)
+n becomesx n.
+2.1 Stage 1: self-attention across the sequence
+The output of the first stage of the transformer block is anotherD×Narray,
+Y (m). The output is produced by aggregating information across the sequence
+independently for each feature using an operation calledattention.
+Attention.Specifically, the output vector at locationn, denotedy (m)
+n , is pro-
+duced by a simple weighted average of the input features at locationn′=
+1...N, denotedx (m−1)
+n′ , that is4
+y(m)
+n =
+N∑
+n′=1
+x(m−1)
+n′ A(m)
+n′,n.(1)
+Here the weighting is given by a so-calledattention matrixA (m)
+n′,n which is of
+size5 N×Nand normalises over its columns∑N
+n′=1A(m)
+n′,n = 1. Intuitively
+speakingA (m)
+n′,n will take a high value for locations in the sequencen′which are
+of high relevance for locationn. For irrelevant locations, it will take the value
+0. For example, all patches of a visual scene coming from a single object might
+have high corresponding attention values.
+We can compactly write the relationship as a matrix multiplication,
+Y (m) =X (m−1)A(m),(2)
+and we illustrate it below in figure 3.6
+Figure 3: The output of an element of the attention mechanism,Y (m)
+d,n , is
+produced by the dot product of the input horizontally sliced through timeX(m)
+d,:
+with a vertical slice from the attention matrixA(m)
+:,n . Here the shading in the
+attention matrix represent the elements with a high value in white and those
+with a low value, near to 0, in black.
+Self-attention.So far, so simple. But where does the attention matrix come
+from? The neat idea in the first stage of the transformer is that the attention
+matrix is generated from the input sequence itself – so-calledself-attention.
+A simple way of generating the attention matrix from the input would be to
+measure the similarity between two locations by the dot product between the
+features at those two locations and then use a softmax function to handle the
+normalisation i.e.7
+An,n′ = exp(x⊤
+n xn′)∑N
+n′′=1 exp(x⊤
+n′′ xn′)
+.
+2
+
+--- Page 5 ---
+8 Often you will see attention parameterised as
+An,n′ = exp(x⊤
+n U⊤Ux n′ /
+√
+D)
+∑N
+n′′=1 exp(x⊤
+n′′ U⊤Ux n′ /
+√
+D)
+.
+Dividing the exponents by the square-root of the
+dimensionality of the projected vector helps nu-
+merical stability, but in this presentation we ab-
+sorb this term intoUto improve clarity.
+9 Some of this effect could be handled by the
+normalisation in the denominator, but asymmet-
+ric similarity allows more flexibility. However, I
+do not know of experimental evidence to support
+usingU q̸=Uk.
+10 Relationship to Recurrent Neural Net-
+works(RNNs). It is illuminating to compare
+the temporal processing in the transformer to
+that of RNNs which recursively update a hid-
+den state feature representation (x (1)
+n ) based
+on the current observation (x(0)
+n ) and the pre-
+vious hidden ...</div>
+            
+                <h2>pdfplumber (pdfplumber_transformers_output.txt)</h2>
+                <div class="content-box">--- Page 1 ---
+An Introduction to Transformers
+Richard E. Turner
+Department of Engineering, University of Cambridge, UK
+Microsoft Research, Cambridge, UK
+ret26@cam.ac.uk
+Abstract. The transformer is a neural network component that can be used to learn useful represen-
+tations of sequences or sets of data-points [Vaswani et al., 2017]. The transformer has driven recent
+advancesinnaturallanguageprocessing[Devlinetal.,2019], computervision[Dosovitskiyetal.,2021],
+andspatio-temporalmodelling[Bietal.,2022]. Therearemanyintroductionstotransformers,butmost
+donotcontainprecisemathematicaldescriptionsofthearchitectureandtheintuitionsbehindthedesign
+choices are often also missing.1 Moreover, as research takes a winding path, the explanations for the
+components of the transformer can be idiosyncratic. In this note we aim for a mathematically precise,
+intuitive, and clean description of the transformer architecture. We will not discuss training as this is
+rather standard. We assume that the reader is familiar with fundamental topics in machine learning
+including multi-layer perceptrons, linear transformations, softmax functions and basic probability.
+1SeePhuongandHutter[2022]foranexceptiontothis.
+6202
+naJ
+02
+]GL.sc[
+6v75501.4032:viXra
+
+--- Page 2 ---
+1 Preliminaries
+Let’sstartbytalkingabouttheformofthedatathatisinputintoatransformer,
+the goal of the transformer, and the form of its output.
+1.1 Input data format: sets or sequences of tokens
+In order to apply a transformer, data must be converted into a set or sequence1
+of N tokens x(0) of dimension D (see figure 1). The tokens can be collected
+n
+into a matrix X(0) which is D×N.2 To give two concrete examples
+1. apassageoftextcanbebrokenupintoasequenceofwordsorsub-words,
+with each word being represented by a single unique vector,
+2. an image can be broken up into a set of patches and each patch can be Figure1: TheinputtoatransformerisNvectors
+mapped into a vector. x( n 0) which are each D dimensional. These can
+becollectedtogetherintoanarrayX(0).
+The embeddings can be fixed or they can be learned with the rest of the pa- 1 Strictlyspeaking,thecollectionoftokensdoes
+rameters of the model e.g. the vectors representing words can be optimised or not need to have an order and the transformer
+canhandlethemasaset(whereorderdoesnot
+a learned linear transform can be used to embed image patches (see figure 2).
+matter),ratherthanasequence. Seesection3.
+A sequence of tokens is a generic representation to use as an input – many 2Notethatmuchoftheliteratureusesthetrans-
+differenttypesofdatacanbe“tokenised”andtransformersarethenimmediately posednotationwherebythedatamatrixisN×D,
+applicable rather than requiring a bespoke architectures for each modality as butIwantsequencestorunacrossthepageand
+was previously the case (CNNs for images, RNNs for sequences, deepsets for featuresdownitintheschematics(aconvention
+Iuseinotherlecturenotes).
+sets etc.). Moreover, this means that you don’t need bespoke handcrafted
+architecturesformixingdataofdifferentmodalities—youcanjustthrowthem
+all into a big set of tokens.
+1.2 Goal: representations of sequences
+The transformer will ingest the input data X(0) and return a representation of
+the sequence in terms of another matrix X(M) which is also of size D ×N.
+The slice x = X(M) will be a vector of features representing the sequence at
+n :,n
+the location of token n. These representations can be used for auto-regressive
+predictionofthenext(n+1)thtoken,globalclassificationoftheentiresequence
+(by pooling across the whole representation), sequence-to-sequence or image-
+to-image prediction problems, etc. Here M denotes the number of layers in the
+transformer.
+2 The transformer block
+Figure2: Encodinganimage: anexample[Doso-
+vitskiy et al., 2021]. An image is split into N
+Therepresentationoftheinputsequencewillbeproducedbyiterativelyapplying patches. Eachpatchisreshapedintoavectorby
+a transformer block thevecoperator. Thisvectorisacteduponbya
+matrixW whichmapsthepatchtoaD dimen-
+X(m) =transformer-block(X(m−1)). sional vector x( n 0). These vectors are collected
+together into the input X(0). The matrix W
+canbelearnedwiththerestofthetransformer’s
+Theblockitselfcomprisestwostages: oneoperatingacrossthesequenceandone
+parameters.
+operatingacrossthefeatures. Thefirststagerefineseachfeatureindependently
+3 The idea of interleaving processing across the
+according to relationships between tokens across the sequence e.g. how much
+sequenceandacrossfeaturesisacommonmotif
+a word in a sequence at position n depends on previous words at position n′, of many machine learning architectures includ-
+or how much two different patches from an image are related to one another. inggraphneuralnetworks(interleavesprocessing
+This stage acts horizontally across rows of X(m−1). The second stage refines across nodes and across features), Fourier neu-
+raloperators(interleavesprocessingacrossspace
+the features representing each token. This stage acts vertically across a column
+and across features), and bottleneck blocks in
+of X(m−1). By repeatedly applying the transformer block the representation at ResNets(interleavesprocessingacrosspixelsand
+tokennandfeaturedcanbeshapedbyinformationattokenn′ andfeatured′.3 acrossfeatures).
+1
+
+--- Page 3 ---
+2.1 Stage 1: self-attention across the sequence
+The output of the first stage of the transformer block is another D×N array,
+Y(m). The output is produced by aggregating information across the sequence
+independently for each feature using an operation called attention.
+Attention. Specifically, the output vector at location n, denoted y(m), is pro-
+n
+duced by a simple weighted average of the input features at location n′ =
+1...N, denoted x( n m ′ −1), that is4 4 Relationship to Convolutional Neural Net-
+works (CNNs). The attention mechanism can
+N recover convolutional filtering as a special case
+y n (m) = X x( n m ′ −1)A( n m ′,n ). (1) e.g.ifx( n 0) isa1Dregularlysampledtime-series
+n′=1 and A(m) =A(m) then the attention mecha-
+n′,n n′−n
+nismineq.1becomesaconvolution. Unlikenor-
+Here the weighting is given by a so-called attention matrix A(m) which is of mal CNNs, these filters have full temporal sup-
+n′,n port. Laterwewillseethatthefiltersthemselves
+size5 N ×N and normalises over its columns PN A(m) = 1. Intuitively dynamicallydependontheinput,anotherdiffer-
+n′=1 n′,n
+ence from standard CNNs. We will also see a
+speaking A(m) will take a high value for locations in the sequence n′ which are
+n′,n similarity: transformers will use multiple atten-
+of high relevance for location n. For irrelevant locations, it will take the value tion maps in each layer in the same way that
+0. For example, all patches of a visual scene coming from a single object might CNNsusemultiplefilters(thoughtypicallytrans-
+formers have fewer attention maps than CNNs
+have high corresponding attention values.
+havechannels).
+We can compactly write the relationship as a matrix multiplication, 5 The need for transformers to store and com-
+puteN×Nattentionarrayscanbeamajorcom-
+Y(m) =X(m−1)A(m), (2) putationalbottleneck,whichmakesprocessingof
+longsequenceschallenging.
+and we illustrate it below in figure 3.6 6 When training transformers to perform auto-
+regressive prediction, e.g. predicting the next
+wordinasequencebasedonthepreviousones,a
+clevermodificationtothemodelcanbeusedto
+accelerate training and inference. This involves
+applyingthetransformertothewholesequence,
+and using masking in the attention mechanism
+(A(m) becomes an upper triangular matrix) to
+preventfuturetokensaffectingtherepresentation
+atearliertokens. Causalpredictionscanthenbe
+madefortheentiresequenceinoneforwardpass
+throughthetransformer. Seesection4formore
+information.
+Figure 3: The output of an element of the attention mechanism, Y(m), is
+d,n
+producedbythedotproductoftheinputhorizontallyslicedthroughtimeX(m)
+d,:
+with a vertical slice from the attention matrix A(m). Here the shading in the
+:,n
+attention matrix represent the elements with a high value in white and those
+with a low value, near to 0, in black.
+Self-attention. So far, so simple. But where does the attention matrix come
+from? The neat idea in the first stage of the transformer is that the attention
+matrix is generated from the input sequence itself – so-called self-attention.
+A simple way of generating the attention matrix from the input would be to
+measure the similarity between two locations by the dot product between the
+features at those two locations and then use a softmax function to handle the
+normalisation i.e.7 7 Wetemporarilysuppressthesuperscriptshere
+A = exp(x⊤ n x n′ ) . to ease the notation so A( n m ,n ) ′ becomes A n,n′
+n,n′ PN n′′=1 exp(x⊤ n′′ x n′ ) andsimilarlyx( n m) becomesxn.
+2
+
+--- Page 4 ---
+However,thisnaïveapproachentanglesinformationaboutthesimilaritybetween
+locations in the sequence with the content of the sequence itself.
+An alternative is to perform the same operation on a linear transformation of
+the sequence, Ux n , so that8 8 Oftenyouwillseeattentionparameterisedas
+√
+A
+n,n′
+=
+PN n′′
+e
+=
+x
+1
+p
+e
+(
+x
+x
+p
+⊤ n
+(
+U
+x⊤ n
+⊤
+′
+U
+′ U
+x
+⊤
+n
+U
+′ )
+x n′ )
+A n,n′ = PN
+n′′
+e
+=
+x
+1
+p(
+e
+x
+x
+⊤ n
+p(
+U
+x
+⊤
+⊤ n′
+U
+′ U
+x
+⊤
+n′
+U
+/
+x n
+D
+′/
+) √
+D)
+.
+Dividingtheexponentsbythesquare-rootofthe
+Typically,U willprojecttoalowerdimensionalspacei.e. U isK×Ddimensional dimensionality of the projected vector helps nu-
+with K <D. In this way only some of the features in the input sequence need merical stability, but in this presentation we ab-
+sorbthistermintoU toimproveclarity.
+be used to compute the similarity, the others being projected out, thereby de-
+coupling the attention computation from the content. However, the numerator
+in this construction is symmetric. This could be a disadvantage. For example,
+we might want the word ‘caulking iron’ to be strongly associated with the word
+‘tool’ (as it is a type of tool), but have the word ‘tool’ more weakly associated
+with the word ‘caulking iron’ (because most of us rarely encounter it).9 9 Some of this effect could b...</div>
+            
+                <h2>PyPDF (pypdf_transformers_output.txt)</h2>
+                <div class="content-box">--- Page 1 ---
+An Introduction to Transformers
+Richard E. Turner
+Department of Engineering, University of Cambridge, UK
+Microsoft Research, Cambridge, UK
+ret26@cam.ac.uk
+Abstract.The transformer is a neural network component that can be used to learn useful represen-
+tations of sequences or sets of data-points [Vaswani et al., 2017]. The transformer has driven recent
+advances in natural language processing [Devlin et al., 2019], computer vision [Dosovitskiy et al., 2021],
+and spatio-temporal modelling [Bi et al., 2022]. There are many introductions to transformers, but most
+do not contain precise mathematical descriptions of the architecture and the intuitions behind the design
+choices are often also missing.1 Moreover, as research takes a winding path, the explanations for the
+components of the transformer can be idiosyncratic. In this note we aim for a mathematically precise,
+intuitive, and clean description of the transformer architecture. We will not discuss training as this is
+rather standard. We assume that the reader is familiar with fundamental topics in machine learning
+including multi-layer perceptrons, linear transformations, softmax functions and basic probability.
+1See Phuong and Hutter [2022] for an exception to this.
+arXiv:2304.10557v6  [cs.LG]  20 Jan 2026
+
+--- Page 2 ---
+Figure 1: The input to a transformer isNvectors
+x(0)
+n which are eachDdimensional. These can
+be collected together into an arrayX(0).
+1 Strictly speaking, the collection of tokens does
+not need to have an order and the transformer
+can handle them as a set (where order does not
+matter), rather than a sequence. See section 3.
+2 Note that much of the literature uses the trans-
+posednotationwherebythedatamatrixisN×D,
+but I want sequences to run across the page and
+features down it in the schematics (a convention
+I use in other lecture notes).
+Figure 2: Encoding an image: an example [Doso-
+vitskiy et al., 2021]. An image is split intoN
+patches. Each patch is reshaped into a vector by
+the vec operator. This vector is acted upon by a
+matrixWwhich maps the patch to aDdimen-
+sional vectorx (0)
+n . These vectors are collected
+together into the inputX (0). The matrixW
+can be learned with the rest of the transformer’s
+parameters.
+3 The idea of interleaving processing across the
+sequence and across features is a common motif
+of many machine learning architectures includ-
+ing graph neural networks (interleaves processing
+across nodes and across features), Fourier neu-
+ral operators (interleaves processing across space
+and across features), and bottleneck blocks in
+ResNets (interleaves processing across pixels and
+across features).
+1 Preliminaries
+Let’s start by talking about the form of the data that is input into a transformer,
+the goal of the transformer, and the form of its output.
+1.1 Input data format: sets or sequences of tokens
+In order to apply a transformer, data must be converted into a set or sequence1
+ofNtokensx (0)
+n of dimensionD(see figure 1). The tokens can be collected
+into a matrixX (0) which isD×N.2 To give two concrete examples
+1. a passage of text can be broken up into a sequence of words or sub-words,
+with each word being represented by a single unique vector,
+2. an image can be broken up into a set of patches and each patch can be
+mapped into a vector.
+The embeddings can be fixed or they can be learned with the rest of the pa-
+rameters of the model e.g. the vectors representing words can be optimised or
+a learned linear transform can be used to embed image patches (see figure 2).
+A sequence of tokens is a generic representation to use as an input – many
+different types of data can be “tokenised” and transformers are then immediately
+applicable rather than requiring a bespoke architectures for each modality as
+was previously the case (CNNs for images, RNNs for sequences, deepsets for
+sets etc.). Moreover, this means that you don’t need bespoke handcrafted
+architectures for mixing data of different modalities — you can just throw them
+all into a big set of tokens.
+1.2 Goal: representations of sequences
+The transformer will ingest the input dataX(0) and return a representation of
+the sequence in terms of another matrixX(M) which is also of sizeD×N.
+The slicexn =X (M)
+:,n will be a vector of features representing the sequence at
+the location of tokenn. These representations can be used for auto-regressive
+prediction of the next (n+1)th token, global classification of the entire sequence
+(by pooling across the whole representation), sequence-to-sequence or image-
+to-image prediction problems, etc. HereMdenotes the number of layers in the
+transformer.
+2 The transformer block
+The representation of the input sequence will be produced by iteratively applying
+a transformer block
+X (m) =transformer-block(X (m−1)).
+Theblockitselfcomprisestwostages: oneoperatingacrossthesequenceandone
+operating across the features. The first stage refines each feature independently
+according to relationships between tokens across the sequence e.g. how much
+a word in a sequence at positionndepends on previous words at positionn′,
+or how much two different patches from an image are related to one another.
+This stage acts horizontally across rows ofX(m−1). The second stage refines
+the features representing each token. This stage acts vertically across a column
+ofX (m−1). By repeatedly applying the transformer block the representation at
+tokennand featuredcan be shaped by information at tokenn′and featured′.3
+1
+
+--- Page 3 ---
+4 Relationship to Convolutional Neural Net-
+works(CNNs). The attention mechanism can
+recover convolutional filtering as a special case
+e.g. ifx (0)
+n is a 1D regularly sampled time-series
+andA (m)
+n′,n =A (m)
+n′−nthen the attention mecha-
+nism in eq. 1 becomes a convolution. Unlike nor-
+mal CNNs, these filters have full temporal sup-
+port. Later we will see that the filters themselves
+dynamically depend on the input, another differ-
+ence from standard CNNs. We will also see a
+similarity: transformers will use multiple atten-
+tion maps in each layer in the same way that
+CNNs use multiple filters (though typically trans-
+formers have fewer attention maps than CNNs
+have channels).
+5 The need for transformers to store and com-
+puteN×Nattention arrays can be a major com-
+putational bottleneck, which makes processing of
+long sequences challenging.
+6 When training transformers to perform auto-
+regressive prediction, e.g. predicting the next
+word in a sequence based on the previous ones, a
+clever modification to the model can be used to
+accelerate training and inference. This involves
+applying the transformer to the whole sequence,
+and using masking in the attention mechanism
+(A(m) becomes an upper triangular matrix) to
+preventfuturetokensaffectingtherepresentation
+at earlier tokens. Causal predictions can then be
+made for the entire sequence in one forward pass
+through the transformer. See section 4 for more
+information.
+7 We temporarily suppress the superscripts here
+to ease the notation soA (m)
+n,n′ becomesA n,n′
+and similarlyx (m)
+n becomesx n.
+2.1 Stage 1: self-attention across the sequence
+The output of the first stage of the transformer block is anotherD×Narray,
+Y (m). The output is produced by aggregating information across the sequence
+independently for each feature using an operation calledattention.
+Attention.Specifically, the output vector at locationn, denotedy (m)
+n , is pro-
+duced by a simple weighted average of the input features at locationn′=
+1...N, denotedx (m−1)
+n′ , that is4
+y(m)
+n =
+N∑
+n′=1
+x(m−1)
+n′ A(m)
+n′,n.(1)
+Here the weighting is given by a so-calledattention matrixA (m)
+n′,n which is of
+size5 N×Nand normalises over its columns∑N
+n′=1A(m)
+n′,n = 1. Intuitively
+speakingA (m)
+n′,n will take a high value for locations in the sequencen′which are
+of high relevance for locationn. For irrelevant locations, it will take the value
+0. For example, all patches of a visual scene coming from a single object might
+have high corresponding attention values.
+We can compactly write the relationship as a matrix multiplication,
+Y (m) =X (m−1)A(m),(2)
+and we illustrate it below in figure 3.6
+Figure 3: The output of an element of the attention mechanism,Y (m)
+d,n , is
+produced by the dot product of the input horizontally sliced through timeX(m)
+d,:
+with a vertical slice from the attention matrixA(m)
+:,n . Here the shading in the
+attention matrix represent the elements with a high value in white and those
+with a low value, near to 0, in black.
+Self-attention.So far, so simple. But where does the attention matrix come
+from? The neat idea in the first stage of the transformer is that the attention
+matrix is generated from the input sequence itself – so-calledself-attention.
+A simple way of generating the attention matrix from the input would be to
+measure the similarity between two locations by the dot product between the
+features at those two locations and then use a softmax function to handle the
+normalisation i.e.7
+An,n′ = exp(x⊤
+n xn′)∑N
+n′′=1 exp(x⊤
+n′′ xn′)
+.
+2
+
+--- Page 4 ---
+8 Often you will see attention parameterised as
+An,n′ = exp(x⊤
+n U⊤Ux n′ /
+√
+D)
+∑N
+n′′=1 exp(x⊤
+n′′ U⊤Ux n′ /
+√
+D)
+.
+Dividing the exponents by the square-root of the
+dimensionality of the projected vector helps nu-
+merical stability, but in this presentation we ab-
+sorb this term intoUto improve clarity.
+9 Some of this effect could be handled by the
+normalisation in the denominator, but asymmet-
+ric similarity allows more flexibility. However, I
+do not know of experimental evidence to support
+usingU q̸=Uk.
+10 Relationship to Recurrent Neural Net-
+works(RNNs). It is illuminating to compare
+the temporal processing in the transformer to
+that of RNNs which recursively update a hid-
+den state feature representation (x (1)
+n ) based
+on the current observation (x(0)
+n ) and the pre-
+vious hidden statex (1)
+n =f(x (1)
+n−1;x (0)
+n ) =
+f(f(x (1)
+n−2;x (0)
+n−1);x (0)
+n ). Here we’ve unrolled
+the RNN one step to show that observations
+which are nearby to the hidden ...</div>
+            
+                <h2>OCR (Tesseract) (ocr_transformers_output.txt)</h2>
+                <div class="content-box">--- Page 1 (OCR) ---
+2304.10557v6 [cs.LG] 20 Jan 2026
+
+arXiv
+
+An Introduction to Transformers
+
+Richard E. Turner
+
+Department of Engineering, University of Cambridge, UK
+Microsoft Research, Cambridge, UK
+
+ret26@cam.ac.uk
+
+Abstract. The transformer is a neural network component that can be used to learn useful represen-
+tations of sequences or sets of data-points [Vaswani et al., 2017]. The transformer has driven recent
+advances in natural language processing [Devlin et al., 2019], computer vision [Dosovitskiy et al., 2021],
+and spatio-temporal modelling [Bi et al., 2022]. There are many introductions to transformers, but most
+do not contain precise mathematical descriptions of the architecture and the intuitions behind the design
+choices are often also missing.? Moreover, as research takes a winding path, the explanations for the
+components of the transformer can be idiosyncratic. In this note we aim for a mathematically precise,
+intuitive, and clean description of the transformer architecture. We will not discuss training as this is
+rather standard. We assume that the reader is familiar with fundamental topics in machine learning
+including multi-layer perceptrons, linear transformations, softmax functions and basic probability.
+
+1See Phuong and Hutter [2022] for an exception to this.
+
+
+--- Page 2 (OCR) ---
+1 Preliminaries
+
+Let's start by talking about the form of the data that is input into a transformer,
+the goal of the transformer, and the form of its output.
+
+1.1 Input data format: sets or sequences of tokens
+
+In order to apply a transformer, data must be converted into a set or sequence!
+of N tokens a”) of dimension D (see figure 1). The tokens can be collected
+into a matrix X() which is D x N.? To give two concrete examples
+
+1. a passage of text can be broken up into a sequence of words or sub-words,
+with each word being represented by a single unique vector,
+
+2. an image can be broken up into a set of patches and each patch can be
+mapped into a vector.
+
+The embeddings can be fixed or they can be learned with the rest of the pa-
+rameters of the model e.g. the vectors representing words can be optimised or
+a learned linear transform can be used to embed image patches (see figure 2).
+
+A sequence of tokens is a generic representation to use as an input — many
+different types of data can be “tokenised” and transformers are then immediately
+applicable rather than requiring a bespoke architectures for each modality as
+was previously the case (CNNs for images, RNNs for sequences, deepsets for
+sets etc.). Moreover, this means that you don’t need bespoke handcrafted
+architectures for mixing data of different modalities — you can just throw them
+all into a big set of tokens.
+
+1.2. Goal: representations of sequences
+
+The transformer will ingest the input data X) and return a representation of
+the sequence in terms of another matrix X(”) which is also of size D x N.
+The slice x, = xi) will be a vector of features representing the sequence at
+the location of token n. These representations can be used for auto-regressive
+prediction of the next (n+1)th token, global classification of the entire sequence
+(by pooling across the whole representation), sequence-to-sequence or image-
+to-image prediction problems, etc. Here MM denotes the number of layers in the
+transformer.
+
+2 The transformer block
+
+The representation of the input sequence will be produced by iteratively applying
+a transformer block
+
+X(™) = transformer-block(X("~)).
+
+The block itself comprises two stages: one operating across the sequence and one
+operating across the features. The first stage refines each feature independently
+according to relationships between tokens across the sequence e.g. how much
+a word in a sequence at position n depends on previous words at position n’,
+or how much two different patches from an image are related to one another.
+This stage acts horizontally across rows of X‘"~1). The second stage refines
+the features representing each token. This stage acts vertically across a column
+of X(™-1)_ By repeatedly applying the transformer block the representation at
+token n and feature d can be shaped by information at token n’ and feature d’.?
+
+vector of features g,(0)
+forni token") n
+
+N columns
+(tokens)
+
+(saunyeay)
+sMol Q
+
+Figure 1: The input to a transformer is N vectors
+Pw which are each D dimensional. These can
+
+be collected together into an array X(°).
+
+t Strictly speaking, the collection of tokens does
+not need to have an order and the transformer
+can handle them as a set (where order does not
+matter), rather than a sequence. See section 3.
+
+2 Note that much of the literature uses the trans-
+posed notation whereby the data matrix is Nx D,
+but | want sequences to run across the page and
+features down it in the schematics (a convention
+I use in other lecture notes).
+
+Sez
+ii —
+
+N patches
+
+x0)
+
+D rows
+
+N columns
+
+2) = W vec
+
+nth patch
+
+Figure 2: Encoding an image: an example [Doso-
+vitskiy et al., 2021]. An image is split into N
+patches. Each patch is reshaped into a vector by
+the vec operator. This vector is acted upon by a
+matrix W which maps the patch to a D dimen-
+sional vector a), These vectors are collected
+together into the input X(°). The matrix W
+can be learned with the rest of the transformer's
+parameters.
+
+3 The idea of interleaving processing across the
+sequence and across features is a common motif
+of many machine learning architectures includ-
+ing graph neural networks (interleaves processing
+across nodes and across features), Fourier neu-
+ral operators (interleaves processing across space
+and across features), and bottleneck blocks in
+ResNets (interleaves processing across pixels and
+across features).
+
+
+--- Page 3 (OCR) ---
+2.1 Stage 1: self-attention across the sequence
+
+The output of the first stage of the transformer block is another D x N array,
+Y(™., The output is produced by aggregating information across the sequence
+independently for each feature using an operation called attention.
+
+Attention. Specifically, the output vector at location n, denoted ys”, is pro-
+
+duced by a simple weighted average of the input features at location n’ =
+1...N, denoted gr) that is*
+
+n!
+
+0 Oe Ae (1)
+
+nf=1
+
+(m)
+
+nn
+
+Here the weighting is given by a so-called attention matrix A which is of
+
+: 2 * N m
+size> N x N and normalises over its columns S7%_, A”) = 1.
+
+n= n!n
+speaking Al”) will take a high value for locations in the sequence n’ which are
+of high relevance for location n. For irrelevant locations, it will take the value
+0. For example, all patches of a visual scene coming from a single object might
+have high corresponding attention values.
+
+Intuitively
+
+We can compactly write the relationship as a matrix multiplication,
+ym) = x(m-1) 4(m) (2)
+
+and we illustrate it below in figure 3.°
+
+ylm) x(m-l) Am
+Yjn)e d x
+n
+DxN DxWN NxWN
+
+Figure 3: The output of an element of the attention mechanism, yi”), is
+
+produced by the dot product of the input horizontally sliced through time xin)
+
+with a vertical slice from the attention matrix Awe) Here the shading in the
+attention matrix represent the elements with a high value in white and those
+with a low value, near to 0, in black.
+
+Self-attention. So far, so simple. But where does the attention matrix come
+from? The neat idea in the first stage of the transformer is that the attention
+matrix is generated from the input sequence itself — so-called self-attention.
+
+A simple way of generating the attention matrix from the input would be to
+measure the similarity between two locations by the dot product between the
+features at those two locations and then use a softmax function to handle the
+
+normalisation i.e.”
+
+A= exp(a,! an’)
+an! = SN
+
+Vat &XP(@ yn)
+
+4 Relationship to Convolutional Neural Net-
+works (CNNs). The attention mechanism can
+recover convolutional filtering as a special case
+e.g. if 2) is a 1D regularly sampled time-series
+and acy) = Aen then the attention mecha-
+nism in eq. 1 becomes a convolution. Unlike nor-
+mal CNNs, these filters have full temporal sup-
+port. Later we will see that the filters themselves
+dynamically depend on the input, another differ-
+ence from standard CNNs. We will also see a
+similarity: transformers will use multiple atten-
+tion maps in each layer in the same way that
+CNNs use multiple filters (though typically trans-
+formers have fewer attention maps than CNNs
+have channels).
+
+5 The need for transformers to store and com-
+pute N x N attention arrays can be a major com-
+putational bottleneck, which makes processing of
+long sequences challenging.
+
+© When training transformers to perform auto-
+regressive prediction, e.g. predicting the next
+word in a sequence based on the previous ones, a
+clever modification to the model can be used to
+accelerate training and inference. This involves
+applying the transformer to the whole sequence,
+and using masking in the attention mechanism
+(AC™ becomes an upper triangular matrix) to
+prevent future tokens affecting the representation
+at earlier tokens. Causal predictions can then be
+made for the entire sequence in one forward pass
+through the transformer. See section 4 for more
+information.
+
+7 We temporarily suppress the superscripts here
+to ease the notation so Ac”)
+
+(
+
+and similarly al” becomes an.
+
+, becomes Aj, 1
+
+
+--- Page 4 (OCR) ---
+However, this naive approach entangles information about the similarity between
+locations in the sequence with the content of the sequence itself.
+
+An alternative is to perform the same operation on a linear transformation of
+the sequence, Ua, so that®
+
+exp(x| U'U an’)
+het exp(@ LU TU an’)
+
+Typically, U will project to a lower dimensional space i.e. U is k x D dimensional
+with A < D. In this way only some of the features in the input sequence need
+be used to compute the similarity, the others being projected out, thereby de-
+coupling the attention computation from the content. However, the numerator
+in this construction is symmetric. This could be a disadvantage. For example,
+we might want the wor...</div>
+            
+                <h2>PyMuPDF Detailed (JSON) (pymupdf_detailed_data.json)</h2>
+                <div class="content-box">{
+  "width": 612.0,
+  "height": 792.0,
+  "blocks": [
+    {
+      "type": 0,
+      "number": 0,
+      "flags": 0,
+      "bbox": [
+        91.8010025024414,
+        92.88212585449219,
+        461.10394287109375,
+        117.66922760009766
+      ],
+      "lines": [
+        {
+          "spans": [
+            {
+              "size": 24.787099838256836,
+              "flags": 20,
+              "bidi": 0,
+              "char_flags": 24,
+              "font": "LMSans10-Bold",
+              "color": 0,
+              "alpha": 255,
+              "ascender": 0.6940000057220459,
+              "descender": -0.1940000057220459,
+              "text": "An",
+              "origin": [
+                91.8010025024414,
+                112.2540283203125
+              ],
+              "bbox": [
+                91.8010025024414,
+                92.88212585449219,
+                123.8755111694336,
+                117.66922760009766
+              ]
+            },
+            {
+              "size": 24.787099838256836,
+              "flags": 20,
+              "bidi": 0,
+              "char_flags": 536,
+              "font": "LMSans10-Bold",
+              "color": 0,
+              "alpha": 255,
+              "ascender": 0.6940000057220459,
+              "descender": -0.1940000057220459,
+              "text": " ",
+              "origin": [
+                123.8755111694336,
+                112.2540283203125
+              ],
+              "bbox": [
+                123.8755111694336,
+                92.88212585449219,
+                132.97238159179688,
+                117.66922760009766
+              ]
+            },
+            {
+              "size": 24.787099838256836,
+              "flags": 20,
+              "bidi": 0,
+              "char_flags": 24,
+              "font": "LMSans10-Bold",
+              "color": 0,
+              "alpha": 255,
+              "ascender": 0.6940000057220459,
+              "descender": -0.1940000057220459,
+              "text": "Introduction",
+              "origin": [
+                132.97238159179688,
+                112.2540283203125
+              ],
+              "bbox": [
+                132.97238159179688,
+                92.88212585449219,
+                272.5237731933594,
+                117.66922760009766
+              ]
+            },
+            {
+              "size": 24.787099838256836,
+              "flags": 20,
+              "bidi": 0,
+              "char_flags": 536,
+              "font": "LMSans10-Bold",
+              "color": 0,
+              "alpha": 255,
+              "ascender": 0.6940000057220459,
+              "descender": -0.1940000057220459,
+              "text": " ",
+              "origin": [
+                272.5237731933594,
+                112.2540283203125
+              ],
+              "bbox": [
+                272.5237731933594,
+                92.88212585449219,
+                281.6206359863281,
+                117.66922760009766
+              ]
+            },
+            {
+              "size": 24.787099838256836,
+              "flags": 20,
+              "bidi": 0,
+              "char_flags": 24,
+              "font": "LMSans10-Bold",
+              "color": 0,
+              "alpha": 255,
+              "ascender": 0.6940000057220459,
+              "descender": -0.1940000057220459,
+              "text": "to",
+              "origin": [
+                281.6206359863281,
+                112.2540283203125
+              ],
+              "bbox": [
+                281.6206359863281,
+                92.88212585449219,
+                305.26751708984375,
+                117.66922760009766
+              ]
+            },
+            {
+              "size": 24.787099838256836,
+              "flags": 20,
+              "bidi": 0,
+              "char_flags": 536,
+              "font": "LMSans10-Bold",
+              "color": 0,
+              "alpha": 255,
+              "ascender": 0.6940000057220459,
+              "descender": -0.1940000057220459,
+              "text": " ",
+              "origin": [
+                305.26751708984375,
+                112.2540283203125
+              ],
+              "bbox": [
+                305.26751708984375,
+                92.88212585449219,
+                314.3643798828125,
+                117.66922760009766
+              ]
+            },
+            {
+              "size": 24.787099838256836,
+              "flags": 20,
+              "bidi": 0,
+              "char_flags": 24,
+              "font": "LMSans10-Bold",
+              "color": 0,
+              "alpha": 255,
+              "ascender": 0.6940000057220459,
+              "descender": -0.1940000057220459,
+              "text": "Transformers",
+              "origin": [
+                314.3643798828125,
+                112.2540283203125
+              ],
+              "bbox": [
+                314.3643798828125,
+                92.88212585449219,
+                461.10394287109375,
+                117.66922760009766
+              ]
+            }
+          ],
+          "wmode": 0,
+          "dir": [
+            1.0,
+            0.0
+          ],
+          "bbox": [
+            91.8010025024414,
+            92.88212585449219,
+            461.10394287109375,
+            117.66922760009766
+          ]
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "number": 1,
+      "flags": 0,
+      "bbox": [
+        91.8010025024414,
+        134.35594177246094,
+        330.1263122558594,
+        180.70196533203125
+      ],
+      "lines": [
+        {
+          "spans": [
+            {
+              "size": 9.962599754333496,
+              "flags": 4,
+              "bidi": 0,
+              "char_flags": 16,
+              "font": "LMSans10-Regular",
+              "color": 0,
+              "alpha": 255,
+              "ascender": 0.6940000057220459,
+              "descender": -0.1940000057220459,
+              "text": "Richard",
+              "origin": [
+                91.8010025024414,
+                142.14202880859375
+              ],
+              "bbox": [
+                91.8010025024414,
+                134.35594177246094,
+                123.2728500366211,
+                144.31854248046875
+              ]
+            },
+            {
+              "size": 9.962599754333496,
+              "flags": 4,
+              "bidi": 0,
+              "char_flags": 528,
+              "font": "LMSans10-Regular",
+              "color": 0,
+              "alpha": 255,
+              "ascender": 0.6940000057220459,
+              "descender": -0.1940000057220459,
+              "text": " ",
+              "origin": [
+                123.2728500366211,
+                142.14202880859375
+              ],
+              "bbox": [
+                123.2728500366211,
+                134.35594177246094,
+                126.59039306640625,
+                144.31854248046875
+              ]
+            },
+            {
+              "size": 9.962599754333496,
+              "flags": 4,
+              "bidi": 0,
+              "char_flags": 16,
+              "font": "LMSans10-Regular",
+              "color": 0,
+              "alpha": 255,
+              "ascender": 0.6940000057220459,
+              "descender": -0.1940000057220459,
+              "text": "E.",
+              "origin": [
+                126.59039306640625,
+                142.14202880859375
+              ],
+              "bbox": [
+                126.59039306640625,
+                134.35594177246094,
+                135.30767822265625,
+                144.31854248046875
+              ]
+            },
+            {
+              "size": 9.962599754333496,
+              "flags": 4,
+              "bidi": 0,
+              "char_flags": 528,
+              "font": "LMSans10-Regular",
+              "color": 0,
+              "alpha": 255,
+              "ascender": 0.6940000057220459,
+              "descender": -0.1940000057220459,
+              "text": " ",
+              "origin": [
+                135.30767822265625,
+                142.14202880859375
+              ],
+              "bbox": [
+                135.30767822265625,
+                134.35594177246094,
+                138.63519287109375,
+                144.31854248046875
+              ]
+            },
+            {
+              "size": 9.962599754333496,
+              "flags": 4,
+              "bidi": 0,
+              "char_flags": 16,
+              "font": "LMSans10-Regular",
+              "color": 0,
+              "alpha": 255,
+              "ascender": 0.6940000057220459,
+              "descender": -0.1940000057220459,
+              "text": "Turner",
+              "origin": [
+                138.63519287109375,
+                142.14202880859375
+              ],
+              "bbox": [
+                138.63519287109375,
+                134.35594177246094,
+                166.13197326660156,
+                144.31854248046875
+              ]
+            }
+          ],
+          "wmode": 0,
+          "dir": [
+            1.0,
+            0.0
+          ],
+          "bbox": [
+            91.8010025024414,
+            134.35594177246094,
+            166.13197326660156,
+            144.31854248046875
+          ]
+        },
+        {
+          "spans": [
+            {
+              "size": 9.962599754333496,
+              "flags": 4,
+              "bidi": 0,
+              "char_flags": 16,
+              "font": "LMSans10-Regular",
+              "color": 0,
+              "alpha": 255,
+              "ascender": 0.6940000057220459,
+              "descender": -0.1940000057220459,
+              "text": "Department",
+              "origin": [
+                91.8010025024414,
+                154.0970458984375
+              ],
+              "bbox": [
+                91.8010025024414,
+                146.3109588623047,
+                141.19558715820312,
+                156.2735595703125
+              ]
+            },
+            {
+              "size": 9.962599754333496,
+              "flags": 4,
+              "bidi": 0,
+              "char_flags": 528,
+              "font": "LMSans10-Regular",
+              "color": 0,
+          ...</div>
+            
+    </body>
+    </html>
+    
