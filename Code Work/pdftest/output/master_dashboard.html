@@ -1,0 +1,279 @@
+
+    <html>
+    <head>
+        <title>Master PDF Benchmark Dashboard</title>
+        <style>
+            body { font-family: 'Outfit', sans-serif; background: #0f172a; color: #f8fafc; padding: 40px; }
+            .container { max-width: 1200px; margin: 0 auto; }
+            h1 { font-size: 3rem; margin-bottom: 30px; background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+            .card { background: #1e293b; border-radius: 16px; padding: 24px; margin-bottom: 40px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border: 1px solid #334155; }
+            h2 { color: #38bdf8; border-bottom: 1px solid #334155; padding-bottom: 12px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+            th, td { padding: 16px; text-align: left; border-bottom: 1px solid #334155; }
+            th { font-weight: 600; color: #94a3b8; }
+            .stars { color: #fbbf24; font-size: 1.2rem; }
+            .badge { padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; }
+            .badge-fast { background: #065f46; color: #34d399; }
+            .badge-slow { background: #7f1d1d; color: #f87171; }
+            .link-btn { color: #38bdf8; text-decoration: none; font-size: 0.9rem; border: 1px solid #38bdf8; padding: 4px 8px; border-radius: 4px; }
+            .link-btn:hover { background: #38bdf8; color: #0f172a; }
+            .overall-score { font-size: 2rem; color: #fbbf24; font-weight: bold; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>📑 Master PDF Benchmarks (2025)</h1>
+            <p>Benchmarking 6 libraries across 4 document categories.</p>
+    
+        <div class="card">
+            <h2>Category: Simple</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Library</th>
+                        <th>Rating</th>
+                        <th>Speed</th>
+                        <th>Chars</th>
+                        <th>Output</th>
+                    </tr>
+                </thead>
+                <tbody>
+        
+                <tr>
+                    <td><strong>PyPDF</strong></td>
+                    <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    <td><span class="badge badge-fast">0.01s</span></td>
+                    <td>2,876</td>
+                    <td><a href="benchmark/simple_pypdf.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>Docling</strong></td>
+                    <td><span class="stars">⭐⭐⭐</span></td>
+                    <td><span class="badge badge-slow">3.15s</span></td>
+                    <td>3,017</td>
+                    <td><a href="benchmark/simple_docling.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>PyMuPDF</strong></td>
+                    <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    <td><span class="badge badge-fast">0.02s</span></td>
+                    <td>2,878</td>
+                    <td><a href="benchmark/simple_pymupdf.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>pdfplumber</strong></td>
+                    <td><span class="stars">⭐⭐⭐⭐</span></td>
+                    <td><span class="badge badge-fast">0.03s</span></td>
+                    <td>2,848</td>
+                    <td><a href="benchmark/simple_pdfplumber.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>OCR (Tesseract)</strong></td>
+                    <td><span class="stars">⭐</span></td>
+                    <td><span class="badge badge-slow">1.48s</span></td>
+                    <td>2,854</td>
+                    <td><a href="benchmark/simple_ocr_(tesseract).txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>Unstructured</strong></td>
+                    <td><span class="stars">⭐⭐⭐⭐</span></td>
+                    <td><span class="badge badge-fast">0.58s</span></td>
+                    <td>2,847</td>
+                    <td><a href="benchmark/simple_unstructured.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            </tbody></table></div>
+        <div class="card">
+            <h2>Category: Invoice (Tables)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Library</th>
+                        <th>Rating</th>
+                        <th>Speed</th>
+                        <th>Chars</th>
+                        <th>Output</th>
+                    </tr>
+                </thead>
+                <tbody>
+        
+                <tr>
+                    <td><strong>PyPDF</strong></td>
+                    <td><span class="stars">⭐⭐</span></td>
+                    <td><span class="badge badge-fast">0.0s</span></td>
+                    <td>677</td>
+                    <td><a href="benchmark/invoice_tables_pypdf.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>Docling</strong></td>
+                    <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    <td><span class="badge badge-slow">1.83s</span></td>
+                    <td>910</td>
+                    <td><a href="benchmark/invoice_tables_docling.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>PyMuPDF</strong></td>
+                    <td><span class="stars">⭐⭐⭐</span></td>
+                    <td><span class="badge badge-fast">0.01s</span></td>
+                    <td>678</td>
+                    <td><a href="benchmark/invoice_tables_pymupdf.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>pdfplumber</strong></td>
+                    <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    <td><span class="badge badge-fast">0.01s</span></td>
+                    <td>680</td>
+                    <td><a href="benchmark/invoice_tables_pdfplumber.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>OCR (Tesseract)</strong></td>
+                    <td><span class="stars">⭐⭐</span></td>
+                    <td><span class="badge badge-fast">0.64s</span></td>
+                    <td>701</td>
+                    <td><a href="benchmark/invoice_tables_ocr_(tesseract).txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>Unstructured</strong></td>
+                    <td><span class="stars">⭐⭐⭐⭐</span></td>
+                    <td><span class="badge badge-fast">0.06s</span></td>
+                    <td>677</td>
+                    <td><a href="benchmark/invoice_tables_unstructured.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            </tbody></table></div>
+        <div class="card">
+            <h2>Category: Research Paper</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Library</th>
+                        <th>Rating</th>
+                        <th>Speed</th>
+                        <th>Chars</th>
+                        <th>Output</th>
+                    </tr>
+                </thead>
+                <tbody>
+        
+                <tr>
+                    <td><strong>PyPDF</strong></td>
+                    <td><span class="stars">⭐⭐⭐</span></td>
+                    <td><span class="badge badge-fast">0.32s</span></td>
+                    <td>39,629</td>
+                    <td><a href="benchmark/research_paper_pypdf.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>Docling</strong></td>
+                    <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    <td><span class="badge badge-slow">6.34s</span></td>
+                    <td>49,455</td>
+                    <td><a href="benchmark/research_paper_docling.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>PyMuPDF</strong></td>
+                    <td><span class="stars">⭐⭐⭐</span></td>
+                    <td><span class="badge badge-fast">0.14s</span></td>
+                    <td>39,512</td>
+                    <td><a href="benchmark/research_paper_pymupdf.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>pdfplumber</strong></td>
+                    <td><span class="stars">⭐⭐</span></td>
+                    <td><span class="badge badge-slow">1.35s</span></td>
+                    <td>35,525</td>
+                    <td><a href="benchmark/research_paper_pdfplumber.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>OCR (Tesseract)</strong></td>
+                    <td><span class="stars">⭐</span></td>
+                    <td><span class="badge badge-slow">2.88s</span></td>
+                    <td>7,083</td>
+                    <td><a href="benchmark/research_paper_ocr_(tesseract).txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>Unstructured</strong></td>
+                    <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    <td><span class="badge badge-slow">1.18s</span></td>
+                    <td>38,739</td>
+                    <td><a href="benchmark/research_paper_unstructured.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            </tbody></table></div>
+        <div class="card">
+            <h2>Category: Fillable Form</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Library</th>
+                        <th>Rating</th>
+                        <th>Speed</th>
+                        <th>Chars</th>
+                        <th>Output</th>
+                    </tr>
+                </thead>
+                <tbody>
+        
+                <tr>
+                    <td><strong>PyPDF</strong></td>
+                    <td><span class="stars">⭐⭐⭐⭐</span></td>
+                    <td><span class="badge badge-fast">0.06s</span></td>
+                    <td>10,415</td>
+                    <td><a href="benchmark/fillable_form_pypdf.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>Docling</strong></td>
+                    <td><span class="stars">⭐⭐</span></td>
+                    <td><span class="badge badge-slow">2.19s</span></td>
+                    <td>11,453</td>
+                    <td><a href="benchmark/fillable_form_docling.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>PyMuPDF</strong></td>
+                    <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    <td><span class="badge badge-fast">0.03s</span></td>
+                    <td>10,497</td>
+                    <td><a href="benchmark/fillable_form_pymupdf.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>pdfplumber</strong></td>
+                    <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    <td><span class="badge badge-fast">0.26s</span></td>
+                    <td>10,152</td>
+                    <td><a href="benchmark/fillable_form_pdfplumber.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>OCR (Tesseract)</strong></td>
+                    <td><span class="stars">⭐</span></td>
+                    <td><span class="badge badge-slow">4.2s</span></td>
+                    <td>9,352</td>
+                    <td><a href="benchmark/fillable_form_ocr_(tesseract).txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            
+                <tr>
+                    <td><strong>Unstructured</strong></td>
+                    <td><span class="stars">⭐⭐⭐</span></td>
+                    <td><span class="badge badge-slow">1.12s</span></td>
+                    <td>10,154</td>
+                    <td><a href="benchmark/fillable_form_unstructured.txt" class="link-btn" target="_blank">View Text</a></td>
+                </tr>
+            </tbody></table></div>
+        </div>
+    </body>
+    </html>
+    

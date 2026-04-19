@@ -1,0 +1,154 @@
+{
+  "Simple": {
+    "PyPDF": {
+      "time": 0.01,
+      "chars": 2876,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/simple_pypdf.txt"
+    },
+    "Docling": {
+      "time": 3.15,
+      "chars": 3017,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/simple_docling.txt"
+    },
+    "PyMuPDF": {
+      "time": 0.02,
+      "chars": 2878,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/simple_pymupdf.txt"
+    },
+    "pdfplumber": {
+      "time": 0.03,
+      "chars": 2848,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/simple_pdfplumber.txt"
+    },
+    "OCR (Tesseract)": {
+      "time": 1.48,
+      "chars": 2854,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/simple_ocr_(tesseract).txt"
+    },
+    "Unstructured": {
+      "time": 0.58,
+      "chars": 2847,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/simple_unstructured.txt"
+    }
+  },
+  "Invoice (Tables)": {
+    "PyPDF": {
+      "time": 0.0,
+      "chars": 677,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/invoice_tables_pypdf.txt"
+    },
+    "Docling": {
+      "time": 1.83,
+      "chars": 910,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/invoice_tables_docling.txt"
+    },
+    "PyMuPDF": {
+      "time": 0.01,
+      "chars": 678,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/invoice_tables_pymupdf.txt"
+    },
+    "pdfplumber": {
+      "time": 0.01,
+      "chars": 680,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/invoice_tables_pdfplumber.txt"
+    },
+    "OCR (Tesseract)": {
+      "time": 0.64,
+      "chars": 701,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/invoice_tables_ocr_(tesseract).txt"
+    },
+    "Unstructured": {
+      "time": 0.06,
+      "chars": 677,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/invoice_tables_unstructured.txt"
+    }
+  },
+  "Research Paper": {
+    "PyPDF": {
+      "time": 0.32,
+      "chars": 39629,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/research_paper_pypdf.txt"
+    },
+    "Docling": {
+      "time": 6.34,
+      "chars": 49455,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/research_paper_docling.txt"
+    },
+    "PyMuPDF": {
+      "time": 0.14,
+      "chars": 39512,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/research_paper_pymupdf.txt"
+    },
+    "pdfplumber": {
+      "time": 1.35,
+      "chars": 35525,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/research_paper_pdfplumber.txt"
+    },
+    "OCR (Tesseract)": {
+      "time": 2.88,
+      "chars": 7083,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/research_paper_ocr_(tesseract).txt"
+    },
+    "Unstructured": {
+      "time": 1.18,
+      "chars": 38739,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/research_paper_unstructured.txt"
+    }
+  },
+  "Fillable Form": {
+    "PyPDF": {
+      "time": 0.06,
+      "chars": 10415,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/fillable_form_pypdf.txt"
+    },
+    "Docling": {
+      "time": 2.19,
+      "chars": 11453,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/fillable_form_docling.txt"
+    },
+    "PyMuPDF": {
+      "time": 0.03,
+      "chars": 10497,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/fillable_form_pymupdf.txt"
+    },
+    "pdfplumber": {
+      "time": 0.26,
+      "chars": 10152,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/fillable_form_pdfplumber.txt"
+    },
+    "OCR (Tesseract)": {
+      "time": 4.2,
+      "chars": 9352,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/fillable_form_ocr_(tesseract).txt"
+    },
+    "Unstructured": {
+      "time": 1.12,
+      "chars": 10154,
+      "status": "Success",
+      "file": "pdftest/output/benchmark/fillable_form_unstructured.txt"
+    }
+  }
+}

@@ -8,6 +8,7 @@ def generate_html_report(output_dir, report_path):
         {"name": "pdfplumber", "file": "pdfplumber_transformers_output.txt", "quality": "Good", "rating": "⭐⭐⭐⭐"},
         {"name": "PyPDF", "file": "pypdf_transformers_output.txt", "quality": "Low", "rating": "⭐⭐"},
         {"name": "OCR (Tesseract)", "file": "ocr_transformers_output.txt", "quality": "Variable", "rating": "⭐⭐"},
+        {"name": "Unstructured OSS", "file": "unstructured_transformers_output.txt", "quality": "High", "rating": "⭐⭐⭐⭐"},
         {"name": "PyMuPDF Detailed (JSON)", "file": "pymupdf_detailed_data.json", "quality": "Maximum", "rating": "⭐⭐⭐⭐⭐"},
     ]
 
