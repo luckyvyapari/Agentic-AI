@@ -1,0 +1,8 @@
+langgraph
+langchain
+langchain-ollama
+langchain-tavily
+reportlab
+streamlit
+rich
+python-dotenv

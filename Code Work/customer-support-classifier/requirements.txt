@@ -1,0 +1,12 @@
+langgraph
+langchain
+langchain-openai
+langchain-google-genai
+gradio
+pandas
+python-dotenv
+pillow
+matplotlib
+langchain-ollama
+rich
+ipython
