@@ -1,0 +1,12 @@
+Create the environment:
+
+python3 -m venv venv
+Activate it:
+
+source venv/bin/activate
+Install the tools:
+
+pip install -r requirements.txt
+
+
+python3 step1_init_db.py

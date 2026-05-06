@@ -1,0 +1,10 @@
+langchain-ollama
+langchain-openai
+langchain-neo4j
+langchain-experimental
+neo4j
+python-dotenv
+httpx
+pydantic
+fastapi
+uvicorn

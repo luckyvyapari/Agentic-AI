@@ -1,0 +1,6 @@
+Alice is the CEO of Acme Corp. 
+Acme Corp is a leading technology company located in New York City. 
+Bob works for Acme Corp as the Chief Technology Officer. 
+Charlie is the Lead Developer at Acme Corp and reports to Bob.
+Acme Corp was founded by David in 2010.
+David is currently the Chairman of the Board.

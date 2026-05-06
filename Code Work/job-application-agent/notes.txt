@@ -1,0 +1,5 @@
+
+
+ python main.py --resume "resume sample/5+ .pdf" --query "Find me Data Analyst jobs in Bangalore"
+ 
+ source .venv/bin/activate && python main.py --resume "/Volumes/SSD/tutorial/Full Stack Agentic AI Engineering /Code Work/job-application-agent/resume sample/5+ .pdf" --query "Find me Data Analyst jobs in Bangalore"

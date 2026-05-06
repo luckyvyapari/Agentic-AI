@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GraphRAG Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Fira+Code&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --text: #1f2937;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text);
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            overflow: hidden;
+        }
+
+        /* Sidebar / Chat Panel */
+        .chat-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            z-index: 10;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .chat-history {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            max-width: 85%;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .message.user {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .message.ai {
+            background: white;
+            border: 1px solid var(--glass-border);
+            align-self: flex-start;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-area {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border: 1px solid #ddd;
+            font-family: inherit;
+            outline: none;
+        }
+
+        button {
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.8rem;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover { transform: scale(1.02); }
+
+        /* Graph Panel */
+        .graph-panel {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .graph-container {
+            flex: 1;
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .ingest-box {
+            margin-top: 1.5rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .loader {
+            display: none;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-panel">
+        <div class="header">
+            <h1>GraphRAG Explorer</h1>
+            <p style="font-size: 0.8rem; color: #666;">Neo4j + Ollama Hybrid Logic</p>
+        </div>
+        
+        <div class="chat-history" id="chat">
+            <div class="message ai">
+                Upload a document or ask a question to visualize the knowledge graph.
+            </div>
+        </div>
+
+        <div class="loader" id="loader">Processing graph...</div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Ask about relationships..." onkeypress="handleKey(event)">
+            <button onclick="sendQuery()">Ask</button>
+        </div>
+    </div>
+
+    <div class="graph-panel">
+        <div class="graph-container" id="graphView">
+            <div class="mermaid">
+                flowchart TD
+                    Start["Upload Document"] --> Result["Visualize Graph"]
+            </div>
+        </div>
+
+        <div class="ingest-box">
+            <h3 style="margin-bottom: 0.8rem; font-size: 1rem;">Add New Knowledge (Batch 5)</h3>
+            <textarea id="ingestInput" rows="3" placeholder="Paste complex text here..."></textarea>
+            <button style="margin-top: 0.5rem; width: 100%; background: var(--secondary);" onclick="ingestText()">Extract Graph & Index</button>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+
+        async function sendQuery() {
+            const input = document.getElementById('userInput');
+            const query = input.value.trim();
+            if (!query) return;
+
+            addMessage(query, 'user');
+            input.value = '';
+            showLoader(true);
+
+            try {
+                const response = await fetch('/api/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query })
+                });
+                const data = await response.json();
+                
+                addMessage(data.answer, 'ai');
+                if (data.graph) updateGraph(data.graph);
+            } catch (error) {
+                addMessage("Error connecting to GraphRAG backend.", 'ai');
+            } finally {
+                showLoader(false);
+            }
+        }
+
+        async function ingestText() {
+            const input = document.getElementById('ingestInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            input.value = 'Ingesting... please wait...';
+            showLoader(true);
+
+            try {
+                const response = await fetch('/api/ingest', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: text })
+                });
+                const data = await response.json();
+                
+                addMessage(data.message, 'ai');
+                // Refresh graph after ingestion
+                const graphRes = await fetch('/api/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: "" })
+                });
+                const graphData = await graphRes.json();
+                if (graphData.graph) updateGraph(graphData.graph);
+                
+                input.value = '';
+            } catch (error) {
+                addMessage("Ingestion failed. Check Neo4j connection.", 'ai');
+                input.value = text;
+            } finally {
+                showLoader(false);
+            }
+        }
+
+        function updateGraph(mermaidCode) {
+            const container = document.getElementById('graphView');
+            container.innerHTML = `<div class="mermaid">${mermaidCode}</div>`;
+            mermaid.run({
+                nodes: [document.querySelector('.mermaid')]
+            });
+        }
+
+        function addMessage(text, role) {
+            const chat = document.getElementById('chat');
+            const div = document.createElement('div');
+            div.className = `message ${role}`;
+            div.innerText = text;
+            chat.appendChild(div);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function handleKey(e) { if (e.key === 'Enter') sendQuery(); }
+        function showLoader(show) { document.getElementById('loader').style.display = show ? 'block' : 'none'; }
+    </script>
+</body>
+</html>

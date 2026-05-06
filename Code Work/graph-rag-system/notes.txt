@@ -1,0 +1,4 @@
+cd "Code Work/graph-rag-system"
+source venv/bin/activate
+export PYTHONPATH=.
+python3 app/main.py

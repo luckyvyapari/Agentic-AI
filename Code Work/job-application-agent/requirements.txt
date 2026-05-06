@@ -1,0 +1,14 @@
+langchain
+langchain-community
+langchain-core
+langchain-openai
+langchain-ollama
+langgraph
+openai
+apify-client
+gspread
+google-auth
+python-dotenv
+pypdf
+tavily-python
+rich

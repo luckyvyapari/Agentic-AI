@@ -13,6 +13,7 @@ from logger import log_event, init_db
 # Initialize DB on start
 init_db()
 
+
 # Configuration
 folder = "deployed_apps"
 
